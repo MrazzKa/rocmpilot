@@ -1,0 +1,9 @@
+gradio
+huggingface_hub
+transformers
+accelerate
+peft
+datasets
+torch
+sentencepiece
+protobuf

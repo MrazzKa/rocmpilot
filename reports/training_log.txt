@@ -1,0 +1,28 @@
+/opt/venv/lib/python3.10/site-packages/torchao/utils.py:408: UserWarning: TORCH_VERSION_AT_LEAST_2_5 is deprecated and will be removed in torchao 0.14.0
+  warnings.warn(self.msg)
+Loading dataset from data/train.jsonl
+Loading tokenizer and model: Qwen/Qwen2.5-Coder-1.5B-Instruct
+trainable params: 18,464,768 || all params: 1,562,179,072 || trainable%: 1.1820
+Map:   0%|          | 0/200 [00:00<?, ? examples/s]Map: 100%|██████████| 200/200 [00:00<00:00, 2203.62 examples/s]
+Map:   0%|          | 0/25 [00:00<?, ? examples/s]Map: 100%|██████████| 25/25 [00:00<00:00, 1976.92 examples/s]
+Starting LoRA fine-tuning on AMD ROCm GPU...
+  0%|          | 0/15 [00:00<?, ?it/s]  7%|▋         | 1/15 [00:06<01:36,  6.87s/it]                                                7%|▋         | 1/15 [00:06<01:36,  6.87s/it] 13%|█▎        | 2/15 [00:07<00:43,  3.36s/it]                                               13%|█▎        | 2/15 [00:07<00:43,  3.36s/it] 20%|██        | 3/15 [00:08<00:26,  2.22s/it]                                               20%|██        | 3/15 [00:08<00:26,  2.22s/it] 27%|██▋       | 4/15 [00:09<00:18,  1.69s/it]                                               27%|██▋       | 4/15 [00:09<00:18,  1.69s/it] 33%|███▎      | 5/15 [00:10<00:13,  1.40s/it]                                               33%|███▎      | 5/15 [00:10<00:13,  1.40s/it] 40%|████      | 6/15 [00:11<00:11,  1.23s/it]                                               40%|████      | 6/15 [00:11<00:11,  1.23s/it] 47%|████▋     | 7/15 [00:12<00:08,  1.11s/it]                                               47%|████▋     | 7/15 [00:12<00:08,  1.11s/it] 53%|█████▎    | 8/15 [00:13<00:07,  1.06s/it]                                               53%|█████▎    | 8/15 [00:13<00:07,  1.06s/it] 60%|██████    | 9/15 [00:13<00:06,  1.00s/it]                                               60%|██████    | 9/15 [00:13<00:06,  1.00s/it] 67%|██████▋   | 10/15 [00:14<00:04,  1.03it/s]                                                67%|██████▋   | 10/15 [00:14<00:04,  1.03it/s] 73%|███████▎  | 11/15 [00:15<00:03,  1.06it/s]                                                73%|███████▎  | 11/15 [00:15<00:03,  1.06it/s] 80%|████████  | 12/15 [00:16<00:02,  1.09it/s]                                                80%|████████  | 12/15 [00:16<00:02,  1.09it/s] 87%|████████▋ | 13/15 [00:17<00:01,  1.10it/s]                                                87%|████████▋ | 13/15 [00:17<00:01,  1.10it/s] 93%|█████████▎| 14/15 [00:18<00:00,  1.12it/s]                                                93%|█████████▎| 14/15 [00:18<00:00,  1.12it/s]100%|██████████| 15/15 [00:19<00:00,  1.12it/s]                                               100%|██████████| 15/15 [00:19<00:00,  1.12it/s]                                               100%|██████████| 15/15 [00:19<00:00,  1.12it/s]100%|██████████| 15/15 [00:19<00:00,  1.28s/it]
+{'loss': 2.5704, 'grad_norm': 1.3953330516815186, 'learning_rate': 0.0002, 'epoch': 0.04}
+{'loss': 2.4514, 'grad_norm': 1.1437830924987793, 'learning_rate': 0.0001866666666666667, 'epoch': 0.08}
+{'loss': 2.2658, 'grad_norm': 1.1323134899139404, 'learning_rate': 0.00017333333333333334, 'epoch': 0.12}
+{'loss': 2.0449, 'grad_norm': 1.1980184316635132, 'learning_rate': 0.00016, 'epoch': 0.16}
+{'loss': 1.6233, 'grad_norm': 1.29877507686615, 'learning_rate': 0.00014666666666666666, 'epoch': 0.2}
+{'loss': 1.4695, 'grad_norm': 1.3938621282577515, 'learning_rate': 0.00013333333333333334, 'epoch': 0.24}
+{'loss': 1.206, 'grad_norm': 1.6582622528076172, 'learning_rate': 0.00012, 'epoch': 0.28}
+{'loss': 0.9622, 'grad_norm': 1.5528863668441772, 'learning_rate': 0.00010666666666666667, 'epoch': 0.32}
+{'loss': 0.9263, 'grad_norm': 1.7504534721374512, 'learning_rate': 9.333333333333334e-05, 'epoch': 0.36}
+{'loss': 0.8593, 'grad_norm': 1.4145108461380005, 'learning_rate': 8e-05, 'epoch': 0.4}
+{'loss': 0.8293, 'grad_norm': 1.1438255310058594, 'learning_rate': 6.666666666666667e-05, 'epoch': 0.44}
+{'loss': 0.6867, 'grad_norm': 1.0951672792434692, 'learning_rate': 5.333333333333333e-05, 'epoch': 0.48}
+{'loss': 0.6437, 'grad_norm': 1.0746212005615234, 'learning_rate': 4e-05, 'epoch': 0.52}
+{'loss': 0.6409, 'grad_norm': 0.8760063648223877, 'learning_rate': 2.6666666666666667e-05, 'epoch': 0.56}
+{'loss': 0.638, 'grad_norm': 0.8796296715736389, 'learning_rate': 1.3333333333333333e-05, 'epoch': 0.6}
+{'train_runtime': 19.2488, 'train_samples_per_second': 6.234, 'train_steps_per_second': 0.779, 'train_loss': 1.3211745460828146, 'epoch': 0.6}
+Saving LoRA adapter to outputs/rocmpilot-qwen25-coder-lora
+Training complete.
+Adapter saved to: outputs/rocmpilot-qwen25-coder-lora

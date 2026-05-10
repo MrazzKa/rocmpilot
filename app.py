@@ -128,4 +128,4 @@ with gr.Blocks(css=css, theme=gr.themes.Monochrome()) as demo:
             gr.Markdown("ROCmPilot provides migration guidance. Always test generated changes in your target ROCm environment.")
 
 if __name__ == "__main__":
-    demo.launch(server_name="127.0.0.1", server_port=7860, share=False)
+    demo.launch(server_name="0.0.0.0", server_port=7860, share=False)

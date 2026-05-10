@@ -1,15 +1,3 @@
----
-title: ROCmPilot
-emoji: 🚀
-colorFrom: indigo
-colorTo: purple
-sdk: gradio
-sdk_version: "4.36.1"
-python_version: "3.10"
-app_file: app.py
-pinned: false
----
-
 # ROCmPilot
 
 **Team:** AMDeus Ex Machina  
@@ -52,6 +40,25 @@ We built a synthetic instruction dataset of 240+ common CUDA-to-ROCm migration i
 - **Hugging Face Space (Live Demo):** [https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/ROCmPilot](https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/ROCmPilot)
 - **Model Adapter:** [https://huggingface.co/MrazzKa/rocmpilot-qwen25-coder-lora](https://huggingface.co/MrazzKa/rocmpilot-qwen25-coder-lora)
 - **GitHub Repository:** [https://github.com/MrazzKa/rocmpilot](https://github.com/MrazzKa/rocmpilot)
+
+---
+
+## Fine-tuning Proof
+
+ROCmPilot was fine-tuned with LoRA on AMD Instinct MI300X using AMD Developer Cloud and ROCm/PyTorch.
+
+Training setup:
+- GPU: AMD Instinct MI300X
+- Framework: PyTorch on ROCm
+- Base model: Qwen/Qwen2.5-Coder-1.5B-Instruct
+- Fine-tuning method: PEFT LoRA
+- Trainable parameters: 18,464,768
+- Dataset: 250 synthetic CUDA-to-ROCm migration examples
+- Training proof: 15-step LoRA run with decreasing loss
+- Output: LoRA adapter published on Hugging Face
+
+Adapter:
+https://huggingface.co/MrazzKa/rocmpilot-qwen25-coder-lora
 
 ---
 

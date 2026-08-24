@@ -42,8 +42,13 @@ def init_model():
             model = PeftModel.from_pretrained(base_model, ADAPTER_MODEL_NAME)
             logger.info("Successfully loaded fine-tuned ROCmPilot model.")
         except Exception as peft_e:
-            logger.warning(f"Could not load PEFT adapter ({peft_e}). Falling back to base model.")
-            model = base_model
+            logger.error(f"Could not load PEFT adapter ({peft_e}).")
+            logger.warning(
+                "Falling back to the explicitly labeled rule-based Demo Mode; "
+                "the base model will not be presented as the fine-tuned adapter."
+            )
+            model = None
+            return False
         
         return True
     except Exception as e:
@@ -68,8 +73,7 @@ def generate_live_response(user_input: str, task_type: str) -> str:
             outputs = model.generate(
                 **inputs,
                 max_new_tokens=512,
-                temperature=0.3,
-                top_p=0.9,
+                do_sample=False,
                 repetition_penalty=1.1
             )
             

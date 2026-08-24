@@ -1,0 +1,355 @@
+{
+  "sources": {
+    "train": {
+      "path": "data/clean_v2/train.jsonl",
+      "sha256": "547bb4ccd485c4cc3cc469ec182d2b3eacb0c75c918bad19982a62ed7e24fa46"
+    },
+    "validation": {
+      "path": "data/clean_v2/val.jsonl",
+      "sha256": "d84f2d8a203eefd707478230bdd53027684e4b1c19afc8099c2e15a6f6807771"
+    },
+    "test": {
+      "path": "data/clean_v2/test.jsonl",
+      "sha256": "0bd2d71f6c3f55f419d50467f2f2fecb61239b16e3597fe50bc4967d740bef73"
+    }
+  },
+  "audit": {
+    "schema_version": 1,
+    "near_duplicate_method": "SequenceMatcher is a lightweight heuristic, not semantic equivalence.",
+    "splits": {
+      "train": {
+        "examples": 16,
+        "exact_duplicates": {
+          "duplicate_groups": 0,
+          "duplicate_instances": 0,
+          "examples": []
+        },
+        "normalized_duplicates": {
+          "duplicate_groups": 0,
+          "duplicate_instances": 0,
+          "examples": []
+        },
+        "repeated_instructions": {
+          "duplicate_groups": 0,
+          "duplicate_instances": 0,
+          "examples": []
+        },
+        "repeated_outputs": {
+          "duplicate_groups": 0,
+          "duplicate_instances": 0,
+          "examples": []
+        },
+        "category_distribution": {
+          "containers": 2,
+          "dependencies": 3,
+          "device_selection": 7,
+          "memory": 2,
+          "monitoring": 2
+        },
+        "template_distribution": {
+          "cuda_base_image_v1": 2,
+          "cuda_dependency_v1": 3,
+          "hardcoded_device_v1": 7,
+          "hip_oom_v1": 2,
+          "nvidia_smi_v1": 2
+        }
+      },
+      "validation": {
+        "examples": 5,
+        "exact_duplicates": {
+          "duplicate_groups": 0,
+          "duplicate_instances": 0,
+          "examples": []
+        },
+        "normalized_duplicates": {
+          "duplicate_groups": 0,
+          "duplicate_instances": 0,
+          "examples": []
+        },
+        "repeated_instructions": {
+          "duplicate_groups": 0,
+          "duplicate_instances": 0,
+          "examples": []
+        },
+        "repeated_outputs": {
+          "duplicate_groups": 0,
+          "duplicate_instances": 0,
+          "examples": []
+        },
+        "category_distribution": {
+          "containers": 1,
+          "dependencies": 1,
+          "device_selection": 1,
+          "memory": 1,
+          "monitoring": 1
+        },
+        "template_distribution": {
+          "cuda_base_image_v1": 1,
+          "cuda_dependency_v1": 1,
+          "hardcoded_device_v1": 1,
+          "hip_oom_v1": 1,
+          "nvidia_smi_v1": 1
+        }
+      },
+      "test": {
+        "examples": 5,
+        "exact_duplicates": {
+          "duplicate_groups": 0,
+          "duplicate_instances": 0,
+          "examples": []
+        },
+        "normalized_duplicates": {
+          "duplicate_groups": 0,
+          "duplicate_instances": 0,
+          "examples": []
+        },
+        "repeated_instructions": {
+          "duplicate_groups": 0,
+          "duplicate_instances": 0,
+          "examples": []
+        },
+        "repeated_outputs": {
+          "duplicate_groups": 0,
+          "duplicate_instances": 0,
+          "examples": []
+        },
+        "category_distribution": {
+          "containers": 1,
+          "dependencies": 1,
+          "device_selection": 1,
+          "memory": 1,
+          "monitoring": 1
+        },
+        "template_distribution": {
+          "cuda_base_image_v1": 1,
+          "cuda_dependency_v1": 1,
+          "hardcoded_device_v1": 1,
+          "hip_oom_v1": 1,
+          "nvidia_smi_v1": 1
+        }
+      }
+    },
+    "cross_split": {
+      "train__validation": {
+        "exact": {
+          "shared_groups": 0,
+          "cross_pairs": 0,
+          "examples": []
+        },
+        "normalized": {
+          "shared_groups": 0,
+          "cross_pairs": 0,
+          "examples": []
+        },
+        "shared_instructions": 0,
+        "shared_outputs": 0
+      },
+      "train__test": {
+        "exact": {
+          "shared_groups": 0,
+          "cross_pairs": 0,
+          "examples": []
+        },
+        "normalized": {
+          "shared_groups": 0,
+          "cross_pairs": 0,
+          "examples": []
+        },
+        "shared_instructions": 0,
+        "shared_outputs": 0
+      },
+      "validation__test": {
+        "exact": {
+          "shared_groups": 0,
+          "cross_pairs": 0,
+          "examples": []
+        },
+        "normalized": {
+          "shared_groups": 0,
+          "cross_pairs": 0,
+          "examples": []
+        },
+        "shared_instructions": 0,
+        "shared_outputs": 0
+      }
+    },
+    "parameter_consistency": {
+      "train": {
+        "counts": {
+          "consistent": 16
+        },
+        "inconsistent_examples": []
+      },
+      "validation": {
+        "counts": {
+          "consistent": 5
+        },
+        "inconsistent_examples": []
+      },
+      "test": {
+        "counts": {
+          "consistent": 5
+        },
+        "inconsistent_examples": []
+      }
+    },
+    "possible_train_test_leakage": {
+      "threshold": 0.9,
+      "unique_instruction_pairs": 14,
+      "examples": [
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 3,
+            "id": "hardcoded_device_v1-003",
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:3'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 5,
+            "id": "hardcoded_device_v1-008",
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:1'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 7,
+            "id": "hardcoded_device_v1-001",
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:5'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 5,
+            "id": "hardcoded_device_v1-008",
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:1'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 9,
+            "id": "hardcoded_device_v1-005",
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 5,
+            "id": "hardcoded_device_v1-008",
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:1'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 10,
+            "id": "hardcoded_device_v1-006",
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:4'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 5,
+            "id": "hardcoded_device_v1-008",
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:1'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 11,
+            "id": "hardcoded_device_v1-002",
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:6'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 5,
+            "id": "hardcoded_device_v1-008",
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:1'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 12,
+            "id": "hardcoded_device_v1-000",
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:2'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 5,
+            "id": "hardcoded_device_v1-008",
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:1'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 13,
+            "id": "hardcoded_device_v1-004",
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 5,
+            "id": "hardcoded_device_v1-008",
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:1'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9789,
+          "train": {
+            "split": "train",
+            "line": 1,
+            "id": "hip_oom_v1-000",
+            "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 512.00 MiB`"
+          },
+          "test": {
+            "split": "test",
+            "line": 2,
+            "id": "hip_oom_v1-003",
+            "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 1.00 GiB`"
+          }
+        },
+        {
+          "similarity": 0.9787,
+          "train": {
+            "split": "train",
+            "line": 15,
+            "id": "hip_oom_v1-001",
+            "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 2.50 GiB`"
+          },
+          "test": {
+            "split": "test",
+            "line": 2,
+            "id": "hip_oom_v1-003",
+            "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 1.00 GiB`"
+          }
+        },
+        {
+          "similarity": 0.9782,
+          "train": {
+            "split": "train",
+            "line": 16,
+            "id": "nvidia_smi_v1-000",
+            "instruction": "I have a health check script:\n```bash\nnvidia-smi -l 1 --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+          },
+          "test": {
+            "split": "test",
+            "line": 1,
+            "id": "nvidia_smi_v1-003",
+            "instruction": "I have a health check script:\n```bash\nnvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+          }
+        }
+      ],
+      "method": "difflib.SequenceMatcher over whitespace-normalized unique instructions"
+    },
+    "suspicious_records": []
+  }
+}

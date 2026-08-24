@@ -1,5 +1,10 @@
 # ROCmPilot Pitch Deck Outline
 
+> **Historical artifact:** this was the hackathon pitch outline. Statements on slide 6
+> were not backed by saved base-vs-adapter generations or computed metrics. They are
+> retained to preserve project history and must not be cited as measured results; see
+> `reports/historical_hackathon_eval.md` and the current root README.
+
 **Team:** AMDeus Ex Machina
 **Track:** Track 2: Fine-Tuning on AMD GPUs
 

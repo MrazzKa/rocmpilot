@@ -1,0 +1,1967 @@
+{
+  "sources": {
+    "train": {
+      "path": "data/train.jsonl",
+      "sha256": "7c0230c08fd4e2b6d6be98d1d184996f9655d159c05cfa1295d736b89b069e4f"
+    },
+    "validation": {
+      "path": "data/val.jsonl",
+      "sha256": "e5ad53e2a4c5bb8af66f900b39f4fcd3767f0b0d4d9e73dd811960b88c18db28"
+    },
+    "test": {
+      "path": "data/test.jsonl",
+      "sha256": "20b73eaefaab90d0a8659b6e46387e38322bfdba69548e368eb2a7bd9f1ec188"
+    }
+  },
+  "audit": {
+    "schema_version": 1,
+    "near_duplicate_method": "SequenceMatcher is a lightweight heuristic, not semantic equivalence.",
+    "splits": {
+      "train": {
+        "examples": 200,
+        "exact_duplicates": {
+          "duplicate_groups": 41,
+          "duplicate_instances": 115,
+          "examples": [
+            {
+              "count": 16,
+              "value": "[\"I got this error:\\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 2.50 GiB`\",\"\",\"## Summary\\nThe application ran out of GPU memory on the AMD accelerator.\\n\\n## Detected ROCm issue\\nThis is the HIP equivalent of the CUDA OOM error. PyTorch's memory allocator is fragmenting or simply exhausted.\\n\\n## Recommended fix\\nReduce batch size, use mixed precision, or tune the PyTorch HIP memory allocator.\\n\\n## Corrected code or config\\nNo code change required. Adjust environment or"
+            },
+            {
+              "count": 14,
+              "value": "[\"I got this error:\\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 1.00 GiB`\",\"\",\"## Summary\\nThe application ran out of GPU memory on the AMD accelerator.\\n\\n## Detected ROCm issue\\nThis is the HIP equivalent of the CUDA OOM error. PyTorch's memory allocator is fragmenting or simply exhausted.\\n\\n## Recommended fix\\nReduce batch size, use mixed precision, or tune the PyTorch HIP memory allocator.\\n\\n## Corrected code or config\\nNo code change required. Adjust environment or"
+            },
+            {
+              "count": 8,
+              "value": "[\"I got this error:\\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 256.00 MiB`\",\"\",\"## Summary\\nThe application ran out of GPU memory on the AMD accelerator.\\n\\n## Detected ROCm issue\\nThis is the HIP equivalent of the CUDA OOM error. PyTorch's memory allocator is fragmenting or simply exhausted.\\n\\n## Recommended fix\\nReduce batch size, use mixed precision, or tune the PyTorch HIP memory allocator.\\n\\n## Corrected code or config\\nNo code change required. Adjust environment "
+            },
+            {
+              "count": 7,
+              "value": "[\"Here is my Dockerfile:\\n```dockerfile\\nFROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime\\nRUN pip install torch\\n```\\nMake it AMD ROCm compatible.\",\"\",\"## Summary\\nThe Dockerfile uses an NVIDIA CUDA base image.\\n\\n## Detected ROCm issue\\nThe `pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs.\\n\\n## Recommended fix\\nSwitch to the official ROCm PyTorch base image.\\n\\n## Corrected code or config\\n```dockerfile\\nFROM ro"
+            },
+            {
+              "count": 6,
+              "value": "[\"I have a health check script:\\n```bash\\nnvidia-smi --query-gpu=memory.used --format=csv\\n```\\nWill this work on AMD?\",\"\",\"## Summary\\nThe script uses an NVIDIA-specific GPU monitoring command.\\n\\n## Detected ROCm issue\\n`watch nvidia-smi` is installed with NVIDIA drivers and will fail with a command not found error on AMD systems.\\n\\n## Recommended fix\\nReplace `watch nvidia-smi` with `rocm-smi`.\\n\\n## Corrected code or config\\n```bash\\nrocm-smi --showmemuse\\n```\\n\\n## Verification commands\\n`"
+            },
+            {
+              "count": 5,
+              "value": "[\"Here is my Dockerfile:\\n```dockerfile\\nFROM nvidia/cuda:12.1.0-base-ubuntu20.04\\nRUN pip install torch\\n```\\nMake it AMD ROCm compatible.\",\"\",\"## Summary\\nThe Dockerfile uses an NVIDIA CUDA base image.\\n\\n## Detected ROCm issue\\nThe `pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs.\\n\\n## Recommended fix\\nSwitch to the official ROCm PyTorch base image.\\n\\n## Corrected code or config\\n```dockerfile\\nFROM rocm/pytorch"
+            },
+            {
+              "count": 5,
+              "value": "[\"I have a health check script:\\n```bash\\nnvidia-smi -l 1 --query-gpu=memory.used --format=csv\\n```\\nWill this work on AMD?\",\"\",\"## Summary\\nThe script uses an NVIDIA-specific GPU monitoring command.\\n\\n## Detected ROCm issue\\n`/usr/bin/nvidia-smi` is installed with NVIDIA drivers and will fail with a command not found error on AMD systems.\\n\\n## Recommended fix\\nReplace `/usr/bin/nvidia-smi` with `rocm-smi`.\\n\\n## Corrected code or config\\n```bash\\nrocm-smi --showmemuse\\n```\\n\\n## Verification "
+            },
+            {
+              "count": 5,
+              "value": "[\"My requirements.txt has this:\\n```text\\nbitsandbytes<0.43\\n```\\nWill this work out of the box on MI300X?\",\"\",\"## Summary\\nThe requirements file lists a dependency heavily tied to CUDA.\\n\\n## Detected ROCm issue\\n`bitsandbytes==0.39.0` historically requires CUDA compilation or specific ROCm branches. Older versions will fail to load on AMD.\\n\\n## Recommended fix\\nUpdate to the latest version of the library that supports ROCm natively, or use the AMD-specific fork/wheel.\\n\\n## Corrected code or "
+            },
+            {
+              "count": 4,
+              "value": "[\"Here is my Dockerfile:\\n```dockerfile\\nFROM nvcr.io/nvidia/pytorch:23.10-py3\\nRUN pip install torch\\n```\\nMake it AMD ROCm compatible.\",\"\",\"## Summary\\nThe Dockerfile uses an NVIDIA CUDA base image.\\n\\n## Detected ROCm issue\\nThe `pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs.\\n\\n## Recommended fix\\nSwitch to the official ROCm PyTorch base image.\\n\\n## Corrected code or config\\n```dockerfile\\nFROM rocm/pytorch:ro"
+            },
+            {
+              "count": 4,
+              "value": "[\"Here is my Dockerfile:\\n```dockerfile\\nFROM nvidia/cuda:12.1.0-base-ubuntu20.04\\nRUN pip install torch\\n```\\nMake it AMD ROCm compatible.\",\"\",\"## Summary\\nThe Dockerfile uses an NVIDIA CUDA base image.\\n\\n## Detected ROCm issue\\nThe `nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs.\\n\\n## Recommended fix\\nSwitch to the official ROCm PyTorch base image.\\n\\n## Corrected code or config\\n```dockerfile\\nFROM rocm/pytorch:r"
+            }
+          ]
+        },
+        "normalized_duplicates": {
+          "duplicate_groups": 41,
+          "duplicate_instances": 115,
+          "examples": [
+            {
+              "count": 16,
+              "value": "[\"I got this error: `torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 2.50 GiB`\",\"\",\"## Summary The application ran out of GPU memory on the AMD accelerator. ## Detected ROCm issue This is the HIP equivalent of the CUDA OOM error. PyTorch's memory allocator is fragmenting or simply exhausted. ## Recommended fix Reduce batch size, use mixed precision, or tune the PyTorch HIP memory allocator. ## Corrected code or config No code change required. Adjust environment or hyperparamete"
+            },
+            {
+              "count": 14,
+              "value": "[\"I got this error: `torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 1.00 GiB`\",\"\",\"## Summary The application ran out of GPU memory on the AMD accelerator. ## Detected ROCm issue This is the HIP equivalent of the CUDA OOM error. PyTorch's memory allocator is fragmenting or simply exhausted. ## Recommended fix Reduce batch size, use mixed precision, or tune the PyTorch HIP memory allocator. ## Corrected code or config No code change required. Adjust environment or hyperparamete"
+            },
+            {
+              "count": 8,
+              "value": "[\"I got this error: `torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 256.00 MiB`\",\"\",\"## Summary The application ran out of GPU memory on the AMD accelerator. ## Detected ROCm issue This is the HIP equivalent of the CUDA OOM error. PyTorch's memory allocator is fragmenting or simply exhausted. ## Recommended fix Reduce batch size, use mixed precision, or tune the PyTorch HIP memory allocator. ## Corrected code or config No code change required. Adjust environment or hyperparame"
+            },
+            {
+              "count": 7,
+              "value": "[\"Here is my Dockerfile: ```dockerfile FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime RUN pip install torch ``` Make it AMD ROCm compatible.\",\"\",\"## Summary The Dockerfile uses an NVIDIA CUDA base image. ## Detected ROCm issue The `pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs. ## Recommended fix Switch to the official ROCm PyTorch base image. ## Corrected code or config ```dockerfile FROM rocm/pytorch:rocm6.1."
+            },
+            {
+              "count": 6,
+              "value": "[\"I have a health check script: ```bash nvidia-smi --query-gpu=memory.used --format=csv ``` Will this work on AMD?\",\"\",\"## Summary The script uses an NVIDIA-specific GPU monitoring command. ## Detected ROCm issue `watch nvidia-smi` is installed with NVIDIA drivers and will fail with a command not found error on AMD systems. ## Recommended fix Replace `watch nvidia-smi` with `rocm-smi`. ## Corrected code or config ```bash rocm-smi --showmemuse ``` ## Verification commands ```bash rocm-smi ``` ## "
+            },
+            {
+              "count": 5,
+              "value": "[\"Here is my Dockerfile: ```dockerfile FROM nvidia/cuda:12.1.0-base-ubuntu20.04 RUN pip install torch ``` Make it AMD ROCm compatible.\",\"\",\"## Summary The Dockerfile uses an NVIDIA CUDA base image. ## Detected ROCm issue The `pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs. ## Recommended fix Switch to the official ROCm PyTorch base image. ## Corrected code or config ```dockerfile FROM rocm/pytorch:rocm6.1.2_ubuntu22"
+            },
+            {
+              "count": 5,
+              "value": "[\"I have a health check script: ```bash nvidia-smi -l 1 --query-gpu=memory.used --format=csv ``` Will this work on AMD?\",\"\",\"## Summary The script uses an NVIDIA-specific GPU monitoring command. ## Detected ROCm issue `/usr/bin/nvidia-smi` is installed with NVIDIA drivers and will fail with a command not found error on AMD systems. ## Recommended fix Replace `/usr/bin/nvidia-smi` with `rocm-smi`. ## Corrected code or config ```bash rocm-smi --showmemuse ``` ## Verification commands ```bash rocm-"
+            },
+            {
+              "count": 5,
+              "value": "[\"My requirements.txt has this: ```text bitsandbytes<0.43 ``` Will this work out of the box on MI300X?\",\"\",\"## Summary The requirements file lists a dependency heavily tied to CUDA. ## Detected ROCm issue `bitsandbytes==0.39.0` historically requires CUDA compilation or specific ROCm branches. Older versions will fail to load on AMD. ## Recommended fix Update to the latest version of the library that supports ROCm natively, or use the AMD-specific fork/wheel. ## Corrected code or config ```text b"
+            },
+            {
+              "count": 4,
+              "value": "[\"Here is my Dockerfile: ```dockerfile FROM nvcr.io/nvidia/pytorch:23.10-py3 RUN pip install torch ``` Make it AMD ROCm compatible.\",\"\",\"## Summary The Dockerfile uses an NVIDIA CUDA base image. ## Detected ROCm issue The `pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs. ## Recommended fix Switch to the official ROCm PyTorch base image. ## Corrected code or config ```dockerfile FROM rocm/pytorch:rocm6.1.2_ubuntu22.04"
+            },
+            {
+              "count": 4,
+              "value": "[\"Here is my Dockerfile: ```dockerfile FROM nvidia/cuda:12.1.0-base-ubuntu20.04 RUN pip install torch ``` Make it AMD ROCm compatible.\",\"\",\"## Summary The Dockerfile uses an NVIDIA CUDA base image. ## Detected ROCm issue The `nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs. ## Recommended fix Switch to the official ROCm PyTorch base image. ## Corrected code or config ```dockerfile FROM rocm/pytorch:rocm6.1.2_ubuntu22.0"
+            }
+          ]
+        },
+        "repeated_instructions": {
+          "duplicate_groups": 25,
+          "duplicate_instances": 174,
+          "examples": [
+            {
+              "count": 16,
+              "value": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 2.50 GiB`"
+            },
+            {
+              "count": 14,
+              "value": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 1.00 GiB`"
+            },
+            {
+              "count": 14,
+              "value": "I have a health check script:\n```bash\nnvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+            },
+            {
+              "count": 11,
+              "value": "Here is my Dockerfile:\n```dockerfile\nFROM nvcr.io/nvidia/pytorch:23.10-py3\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+            },
+            {
+              "count": 11,
+              "value": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:12.1.0-base-ubuntu20.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+            },
+            {
+              "count": 11,
+              "value": "My requirements.txt has this:\n```text\nbitsandbytes==0.39.0\n```\nWill this work out of the box on MI300X?"
+            },
+            {
+              "count": 10,
+              "value": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+            },
+            {
+              "count": 10,
+              "value": "I have a health check script:\n```bash\nnvidia-smi -l 1 --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+            },
+            {
+              "count": 9,
+              "value": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+            },
+            {
+              "count": 9,
+              "value": "Here is my Dockerfile:\n```dockerfile\nFROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+            }
+          ]
+        },
+        "repeated_outputs": {
+          "duplicate_groups": 23,
+          "duplicate_instances": 177,
+          "examples": [
+            {
+              "count": 42,
+              "value": "## Summary\nThe application ran out of GPU memory on the AMD accelerator.\n\n## Detected ROCm issue\nThis is the HIP equivalent of the CUDA OOM error. PyTorch's memory allocator is fragmenting or simply exhausted.\n\n## Recommended fix\nReduce batch size, use mixed precision, or tune the PyTorch HIP memory allocator.\n\n## Corrected code or config\nNo code change required. Adjust environment or hyperparameters.\n\n## Verification commands\n```bash\nexport PYTORCH_HIP_ALLOC_CONF=max_split_size_mb:128\n```\n\n## R"
+            },
+            {
+              "count": 19,
+              "value": "## Summary\nThe Dockerfile uses an NVIDIA CUDA base image.\n\n## Detected ROCm issue\nThe `pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs.\n\n## Recommended fix\nSwitch to the official ROCm PyTorch base image.\n\n## Corrected code or config\n```dockerfile\nFROM rocm/pytorch:rocm6.1.2_ubuntu22.04_py3.10_pytorch_2.1.2\nRUN pip install torch\n```\n\n## Verification commands\n```bash\ndocker run -it --device=/dev/kfd --device=/dev/dri r"
+            },
+            {
+              "count": 14,
+              "value": "## Summary\nThe requirements file lists a dependency heavily tied to CUDA.\n\n## Detected ROCm issue\n`bitsandbytes==0.39.0` historically requires CUDA compilation or specific ROCm branches. Older versions will fail to load on AMD.\n\n## Recommended fix\nUpdate to the latest version of the library that supports ROCm natively, or use the AMD-specific fork/wheel.\n\n## Corrected code or config\n```text\nbitsandbytes>=0.43.0\n```\n\n## Verification commands\n```bash\npython -c \"import bitsandbytes; print(bitsandby"
+            },
+            {
+              "count": 13,
+              "value": "## Summary\nThe script uses an NVIDIA-specific GPU monitoring command.\n\n## Detected ROCm issue\n`/usr/bin/nvidia-smi` is installed with NVIDIA drivers and will fail with a command not found error on AMD systems.\n\n## Recommended fix\nReplace `/usr/bin/nvidia-smi` with `rocm-smi`.\n\n## Corrected code or config\n```bash\nrocm-smi --showmemuse\n```\n\n## Verification commands\n```bash\nrocm-smi\n```\n\n## ROCm readiness score\n0/100. The original command will fail.\n\n## Cursor prompt\n\"Update this bash command to us"
+            },
+            {
+              "count": 10,
+              "value": "## Summary\nThe Dockerfile uses an NVIDIA CUDA base image.\n\n## Detected ROCm issue\nThe `nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs.\n\n## Recommended fix\nSwitch to the official ROCm PyTorch base image.\n\n## Corrected code or config\n```dockerfile\nFROM rocm/pytorch:rocm6.1.2_ubuntu22.04_py3.10_pytorch_2.1.2\nRUN pip install torch\n```\n\n## Verification commands\n```bash\ndocker run -it --device=/dev/kfd --device=/dev/dri roc"
+            },
+            {
+              "count": 10,
+              "value": "## Summary\nThe requirements file lists a dependency heavily tied to CUDA.\n\n## Detected ROCm issue\n`xformers==0.0.22` historically requires CUDA compilation or specific ROCm branches. Older versions will fail to load on AMD.\n\n## Recommended fix\nUpdate to the latest version of the library that supports ROCm natively, or use the AMD-specific fork/wheel.\n\n## Corrected code or config\n```text\nbitsandbytes>=0.43.0\n```\n\n## Verification commands\n```bash\npython -c \"import bitsandbytes; print(bitsandbytes."
+            },
+            {
+              "count": 10,
+              "value": "## Summary\nThe script uses an NVIDIA-specific GPU monitoring command.\n\n## Detected ROCm issue\n`nvidia-smi -l 1` is installed with NVIDIA drivers and will fail with a command not found error on AMD systems.\n\n## Recommended fix\nReplace `nvidia-smi -l 1` with `rocm-smi`.\n\n## Corrected code or config\n```bash\nrocm-smi --showmemuse\n```\n\n## Verification commands\n```bash\nrocm-smi\n```\n\n## ROCm readiness score\n0/100. The original command will fail.\n\n## Cursor prompt\n\"Update this bash command to use `rocm-"
+            },
+            {
+              "count": 9,
+              "value": "## Summary\nThe script uses an NVIDIA-specific GPU monitoring command.\n\n## Detected ROCm issue\n`watch nvidia-smi` is installed with NVIDIA drivers and will fail with a command not found error on AMD systems.\n\n## Recommended fix\nReplace `watch nvidia-smi` with `rocm-smi`.\n\n## Corrected code or config\n```bash\nrocm-smi --showmemuse\n```\n\n## Verification commands\n```bash\nrocm-smi\n```\n\n## ROCm readiness score\n0/100. The original command will fail.\n\n## Cursor prompt\n\"Update this bash command to use `roc"
+            },
+            {
+              "count": 8,
+              "value": "## Summary\nThe requirements file lists a dependency heavily tied to CUDA.\n\n## Detected ROCm issue\n`flash-attn==2.3.1.post1` historically requires CUDA compilation or specific ROCm branches. Older versions will fail to load on AMD.\n\n## Recommended fix\nUpdate to the latest version of the library that supports ROCm natively, or use the AMD-specific fork/wheel.\n\n## Corrected code or config\n```text\nbitsandbytes>=0.43.0\n```\n\n## Verification commands\n```bash\npython -c \"import bitsandbytes; print(bitsan"
+            },
+            {
+              "count": 8,
+              "value": "## Summary\nThe script uses an NVIDIA-specific GPU monitoring command.\n\n## Detected ROCm issue\n`nvidia-smi` is installed with NVIDIA drivers and will fail with a command not found error on AMD systems.\n\n## Recommended fix\nReplace `nvidia-smi` with `rocm-smi`.\n\n## Corrected code or config\n```bash\nrocm-smi --showmemuse\n```\n\n## Verification commands\n```bash\nrocm-smi\n```\n\n## ROCm readiness score\n0/100. The original command will fail.\n\n## Cursor prompt\n\"Update this bash command to use `rocm-smi` for A"
+            }
+          ]
+        },
+        "category_distribution": {
+          "containers": 40,
+          "dependencies": 42,
+          "device_selection": 36,
+          "memory": 42,
+          "monitoring": 40
+        },
+        "template_distribution": {
+          "cuda_base_image_v1": 40,
+          "cuda_dependency_v1": 42,
+          "hardcoded_device_v1": 36,
+          "hip_oom_v1": 42,
+          "nvidia_smi_v1": 40
+        }
+      },
+      "validation": {
+        "examples": 25,
+        "exact_duplicates": {
+          "duplicate_groups": 3,
+          "duplicate_instances": 3,
+          "examples": [
+            {
+              "count": 2,
+              "value": "[\"Here is my Dockerfile:\\n```dockerfile\\nFROM nvcr.io/nvidia/pytorch:23.10-py3\\nRUN pip install torch\\n```\\nMake it AMD ROCm compatible.\",\"\",\"## Summary\\nThe Dockerfile uses an NVIDIA CUDA base image.\\n\\n## Detected ROCm issue\\nThe `pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs.\\n\\n## Recommended fix\\nSwitch to the official ROCm PyTorch base image.\\n\\n## Corrected code or config\\n```dockerfile\\nFROM rocm/pytorch:ro"
+            },
+            {
+              "count": 2,
+              "value": "[\"Here is my Dockerfile:\\n```dockerfile\\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\\nRUN pip install torch\\n```\\nMake it AMD ROCm compatible.\",\"\",\"## Summary\\nThe Dockerfile uses an NVIDIA CUDA base image.\\n\\n## Detected ROCm issue\\nThe `nvidia/cuda:12.1.0-base-ubuntu20.04` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs.\\n\\n## Recommended fix\\nSwitch to the official ROCm PyTorch base image.\\n\\n## Corrected code or config\\n```dockerfile\\nFROM rocm/pytorch:r"
+            },
+            {
+              "count": 2,
+              "value": "[\"I have a health check script:\\n```bash\\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\\n```\\nWill this work on AMD?\",\"\",\"## Summary\\nThe script uses an NVIDIA-specific GPU monitoring command.\\n\\n## Detected ROCm issue\\n`/usr/bin/nvidia-smi` is installed with NVIDIA drivers and will fail with a command not found error on AMD systems.\\n\\n## Recommended fix\\nReplace `/usr/bin/nvidia-smi` with `rocm-smi`.\\n\\n## Corrected code or config\\n```bash\\nrocm-smi --showmemuse\\n```\\n\\n## Verificat"
+            }
+          ]
+        },
+        "normalized_duplicates": {
+          "duplicate_groups": 3,
+          "duplicate_instances": 3,
+          "examples": [
+            {
+              "count": 2,
+              "value": "[\"Here is my Dockerfile: ```dockerfile FROM nvcr.io/nvidia/pytorch:23.10-py3 RUN pip install torch ``` Make it AMD ROCm compatible.\",\"\",\"## Summary The Dockerfile uses an NVIDIA CUDA base image. ## Detected ROCm issue The `pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs. ## Recommended fix Switch to the official ROCm PyTorch base image. ## Corrected code or config ```dockerfile FROM rocm/pytorch:rocm6.1.2_ubuntu22.04"
+            },
+            {
+              "count": 2,
+              "value": "[\"Here is my Dockerfile: ```dockerfile FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 RUN pip install torch ``` Make it AMD ROCm compatible.\",\"\",\"## Summary The Dockerfile uses an NVIDIA CUDA base image. ## Detected ROCm issue The `nvidia/cuda:12.1.0-base-ubuntu20.04` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs. ## Recommended fix Switch to the official ROCm PyTorch base image. ## Corrected code or config ```dockerfile FROM rocm/pytorch:rocm6.1.2_ubuntu22.0"
+            },
+            {
+              "count": 2,
+              "value": "[\"I have a health check script: ```bash /usr/bin/nvidia-smi --query-gpu=memory.used --format=csv ``` Will this work on AMD?\",\"\",\"## Summary The script uses an NVIDIA-specific GPU monitoring command. ## Detected ROCm issue `/usr/bin/nvidia-smi` is installed with NVIDIA drivers and will fail with a command not found error on AMD systems. ## Recommended fix Replace `/usr/bin/nvidia-smi` with `rocm-smi`. ## Corrected code or config ```bash rocm-smi --showmemuse ``` ## Verification commands ```bash r"
+            }
+          ]
+        },
+        "repeated_instructions": {
+          "duplicate_groups": 6,
+          "duplicate_instances": 8,
+          "examples": [
+            {
+              "count": 3,
+              "value": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+            },
+            {
+              "count": 3,
+              "value": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+            },
+            {
+              "count": 2,
+              "value": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```"
+            },
+            {
+              "count": 2,
+              "value": "Here is my Dockerfile:\n```dockerfile\nFROM nvcr.io/nvidia/pytorch:23.10-py3\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+            },
+            {
+              "count": 2,
+              "value": "My requirements.txt has this:\n```text\nbitsandbytes==0.39.0\n```\nWill this work out of the box on MI300X?"
+            },
+            {
+              "count": 2,
+              "value": "My requirements.txt has this:\n```text\nbitsandbytes==0.41.1\n```\nWill this work out of the box on MI300X?"
+            }
+          ]
+        },
+        "repeated_outputs": {
+          "duplicate_groups": 8,
+          "duplicate_instances": 11,
+          "examples": [
+            {
+              "count": 4,
+              "value": "## Summary\nThe script uses an NVIDIA-specific GPU monitoring command.\n\n## Detected ROCm issue\n`/usr/bin/nvidia-smi` is installed with NVIDIA drivers and will fail with a command not found error on AMD systems.\n\n## Recommended fix\nReplace `/usr/bin/nvidia-smi` with `rocm-smi`.\n\n## Corrected code or config\n```bash\nrocm-smi --showmemuse\n```\n\n## Verification commands\n```bash\nrocm-smi\n```\n\n## ROCm readiness score\n0/100. The original command will fail.\n\n## Cursor prompt\n\"Update this bash command to us"
+            },
+            {
+              "count": 3,
+              "value": "## Summary\nThe Dockerfile uses an NVIDIA CUDA base image.\n\n## Detected ROCm issue\nThe `nvidia/cuda:12.1.0-base-ubuntu20.04` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs.\n\n## Recommended fix\nSwitch to the official ROCm PyTorch base image.\n\n## Corrected code or config\n```dockerfile\nFROM rocm/pytorch:rocm6.1.2_ubuntu22.04_py3.10_pytorch_2.1.2\nRUN pip install torch\n```\n\n## Verification commands\n```bash\ndocker run -it --device=/dev/kfd --device=/dev/dri rocm/pytorc"
+            },
+            {
+              "count": 2,
+              "value": "## Summary\nThe Dockerfile uses an NVIDIA CUDA base image.\n\n## Detected ROCm issue\nThe `pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs.\n\n## Recommended fix\nSwitch to the official ROCm PyTorch base image.\n\n## Corrected code or config\n```dockerfile\nFROM rocm/pytorch:rocm6.1.2_ubuntu22.04_py3.10_pytorch_2.1.2\nRUN pip install torch\n```\n\n## Verification commands\n```bash\ndocker run -it --device=/dev/kfd --device=/dev/dri r"
+            },
+            {
+              "count": 2,
+              "value": "## Summary\nThe code hardcodes a CUDA device string.\n\n## Detected ROCm issue\nHardcoding `cuda:3` is not portable. While PyTorch ROCm aliases `cuda` to HIP, it's better to use dynamic checking.\n\n## Recommended fix\nUse `torch.cuda.is_available()` to dynamically assign the device.\n\n## Corrected code or config\n```python\nimport torch\ndevice = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\nmodel.to(device)\n```\n\n## Verification commands\n```bash\npython -c \"import torch; print(torch.cuda.is_"
+            },
+            {
+              "count": 2,
+              "value": "## Summary\nThe code hardcodes a CUDA device string.\n\n## Detected ROCm issue\nHardcoding `cuda` is not portable. While PyTorch ROCm aliases `cuda` to HIP, it's better to use dynamic checking.\n\n## Recommended fix\nUse `torch.cuda.is_available()` to dynamically assign the device.\n\n## Corrected code or config\n```python\nimport torch\ndevice = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\nmodel.to(device)\n```\n\n## Verification commands\n```bash\npython -c \"import torch; print(torch.cuda.is_av"
+            },
+            {
+              "count": 2,
+              "value": "## Summary\nThe requirements file lists a dependency heavily tied to CUDA.\n\n## Detected ROCm issue\n`bitsandbytes<0.43` historically requires CUDA compilation or specific ROCm branches. Older versions will fail to load on AMD.\n\n## Recommended fix\nUpdate to the latest version of the library that supports ROCm natively, or use the AMD-specific fork/wheel.\n\n## Corrected code or config\n```text\nbitsandbytes>=0.43.0\n```\n\n## Verification commands\n```bash\npython -c \"import bitsandbytes; print(bitsandbytes"
+            },
+            {
+              "count": 2,
+              "value": "## Summary\nThe requirements file lists a dependency heavily tied to CUDA.\n\n## Detected ROCm issue\n`flash-attn==2.3.1.post1` historically requires CUDA compilation or specific ROCm branches. Older versions will fail to load on AMD.\n\n## Recommended fix\nUpdate to the latest version of the library that supports ROCm natively, or use the AMD-specific fork/wheel.\n\n## Corrected code or config\n```text\nbitsandbytes>=0.43.0\n```\n\n## Verification commands\n```bash\npython -c \"import bitsandbytes; print(bitsan"
+            },
+            {
+              "count": 2,
+              "value": "## Summary\nThe script uses an NVIDIA-specific GPU monitoring command.\n\n## Detected ROCm issue\n`nvidia-smi -l 1` is installed with NVIDIA drivers and will fail with a command not found error on AMD systems.\n\n## Recommended fix\nReplace `nvidia-smi -l 1` with `rocm-smi`.\n\n## Corrected code or config\n```bash\nrocm-smi --showmemuse\n```\n\n## Verification commands\n```bash\nrocm-smi\n```\n\n## ROCm readiness score\n0/100. The original command will fail.\n\n## Cursor prompt\n\"Update this bash command to use `rocm-"
+            }
+          ]
+        },
+        "category_distribution": {
+          "containers": 6,
+          "dependencies": 6,
+          "device_selection": 6,
+          "memory": 1,
+          "monitoring": 6
+        },
+        "template_distribution": {
+          "cuda_base_image_v1": 6,
+          "cuda_dependency_v1": 6,
+          "hardcoded_device_v1": 6,
+          "hip_oom_v1": 1,
+          "nvidia_smi_v1": 6
+        }
+      },
+      "test": {
+        "examples": 25,
+        "exact_duplicates": {
+          "duplicate_groups": 1,
+          "duplicate_instances": 3,
+          "examples": [
+            {
+              "count": 4,
+              "value": "[\"I got this error:\\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 2.50 GiB`\",\"\",\"## Summary\\nThe application ran out of GPU memory on the AMD accelerator.\\n\\n## Detected ROCm issue\\nThis is the HIP equivalent of the CUDA OOM error. PyTorch's memory allocator is fragmenting or simply exhausted.\\n\\n## Recommended fix\\nReduce batch size, use mixed precision, or tune the PyTorch HIP memory allocator.\\n\\n## Corrected code or config\\nNo code change required. Adjust environment or"
+            }
+          ]
+        },
+        "normalized_duplicates": {
+          "duplicate_groups": 1,
+          "duplicate_instances": 3,
+          "examples": [
+            {
+              "count": 4,
+              "value": "[\"I got this error: `torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 2.50 GiB`\",\"\",\"## Summary The application ran out of GPU memory on the AMD accelerator. ## Detected ROCm issue This is the HIP equivalent of the CUDA OOM error. PyTorch's memory allocator is fragmenting or simply exhausted. ## Recommended fix Reduce batch size, use mixed precision, or tune the PyTorch HIP memory allocator. ## Corrected code or config No code change required. Adjust environment or hyperparamete"
+            }
+          ]
+        },
+        "repeated_instructions": {
+          "duplicate_groups": 6,
+          "duplicate_instances": 9,
+          "examples": [
+            {
+              "count": 4,
+              "value": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 2.50 GiB`"
+            },
+            {
+              "count": 3,
+              "value": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+            },
+            {
+              "count": 2,
+              "value": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:3'\nmodel.to(device)\n```"
+            },
+            {
+              "count": 2,
+              "value": "Here is my Dockerfile:\n```dockerfile\nFROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+            },
+            {
+              "count": 2,
+              "value": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+            },
+            {
+              "count": 2,
+              "value": "I have a health check script:\n```bash\nwatch nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+            }
+          ]
+        },
+        "repeated_outputs": {
+          "duplicate_groups": 4,
+          "duplicate_instances": 10,
+          "examples": [
+            {
+              "count": 7,
+              "value": "## Summary\nThe application ran out of GPU memory on the AMD accelerator.\n\n## Detected ROCm issue\nThis is the HIP equivalent of the CUDA OOM error. PyTorch's memory allocator is fragmenting or simply exhausted.\n\n## Recommended fix\nReduce batch size, use mixed precision, or tune the PyTorch HIP memory allocator.\n\n## Corrected code or config\nNo code change required. Adjust environment or hyperparameters.\n\n## Verification commands\n```bash\nexport PYTORCH_HIP_ALLOC_CONF=max_split_size_mb:128\n```\n\n## R"
+            },
+            {
+              "count": 3,
+              "value": "## Summary\nThe Dockerfile uses an NVIDIA CUDA base image.\n\n## Detected ROCm issue\nThe `nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04` contains CUDA toolkits and NVIDIA libraries that will not interact with AMD GPUs.\n\n## Recommended fix\nSwitch to the official ROCm PyTorch base image.\n\n## Corrected code or config\n```dockerfile\nFROM rocm/pytorch:rocm6.1.2_ubuntu22.04_py3.10_pytorch_2.1.2\nRUN pip install torch\n```\n\n## Verification commands\n```bash\ndocker run -it --device=/dev/kfd --device=/dev/dri roc"
+            },
+            {
+              "count": 2,
+              "value": "## Summary\nThe code hardcodes a CUDA device string.\n\n## Detected ROCm issue\nHardcoding `cuda:6` is not portable. While PyTorch ROCm aliases `cuda` to HIP, it's better to use dynamic checking.\n\n## Recommended fix\nUse `torch.cuda.is_available()` to dynamically assign the device.\n\n## Corrected code or config\n```python\nimport torch\ndevice = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\nmodel.to(device)\n```\n\n## Verification commands\n```bash\npython -c \"import torch; print(torch.cuda.is_"
+            },
+            {
+              "count": 2,
+              "value": "## Summary\nThe requirements file lists a dependency heavily tied to CUDA.\n\n## Detected ROCm issue\n`bitsandbytes<0.43` historically requires CUDA compilation or specific ROCm branches. Older versions will fail to load on AMD.\n\n## Recommended fix\nUpdate to the latest version of the library that supports ROCm natively, or use the AMD-specific fork/wheel.\n\n## Corrected code or config\n```text\nbitsandbytes>=0.43.0\n```\n\n## Verification commands\n```bash\npython -c \"import bitsandbytes; print(bitsandbytes"
+            }
+          ]
+        },
+        "category_distribution": {
+          "containers": 4,
+          "dependencies": 2,
+          "device_selection": 8,
+          "memory": 7,
+          "monitoring": 4
+        },
+        "template_distribution": {
+          "cuda_base_image_v1": 4,
+          "cuda_dependency_v1": 2,
+          "hardcoded_device_v1": 8,
+          "hip_oom_v1": 7,
+          "nvidia_smi_v1": 4
+        }
+      }
+    },
+    "cross_split": {
+      "train__validation": {
+        "exact": {
+          "shared_groups": 16,
+          "cross_pairs": 57,
+          "examples": [
+            {
+              "left": {
+                "split": "train",
+                "line": 130,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```"
+              },
+              "right": {
+                "split": "validation",
+                "line": 7,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```"
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 58,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:6'\nmodel.to(device)\n```"
+              },
+              "right": {
+                "split": "validation",
+                "line": 10,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:6'\nmodel.to(device)\n```"
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 89,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+              },
+              "right": {
+                "split": "validation",
+                "line": 5,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 12,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvcr.io/nvidia/pytorch:23.10-py3\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "right": {
+                "split": "validation",
+                "line": 18,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvcr.io/nvidia/pytorch:23.10-py3\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "left_occurrences": 4,
+              "right_occurrences": 2
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 45,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "right": {
+                "split": "validation",
+                "line": 12,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "left_occurrences": 3,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 11,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "right": {
+                "split": "validation",
+                "line": 14,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 2
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 71,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 256.00 MiB`"
+              },
+              "right": {
+                "split": "validation",
+                "line": 1,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 256.00 MiB`"
+              },
+              "left_occurrences": 8,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 44,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "right": {
+                "split": "validation",
+                "line": 6,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "left_occurrences": 4,
+              "right_occurrences": 2
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 100,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "right": {
+                "split": "validation",
+                "line": 23,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "left_occurrences": 2,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 32,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\nnvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "right": {
+                "split": "validation",
+                "line": 21,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\nnvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "left_occurrences": 4,
+              "right_occurrences": 1
+            }
+          ]
+        },
+        "normalized": {
+          "shared_groups": 16,
+          "cross_pairs": 57,
+          "examples": [
+            {
+              "left": {
+                "split": "train",
+                "line": 130,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```"
+              },
+              "right": {
+                "split": "validation",
+                "line": 7,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```"
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 58,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:6'\nmodel.to(device)\n```"
+              },
+              "right": {
+                "split": "validation",
+                "line": 10,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:6'\nmodel.to(device)\n```"
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 89,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+              },
+              "right": {
+                "split": "validation",
+                "line": 5,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 12,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvcr.io/nvidia/pytorch:23.10-py3\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "right": {
+                "split": "validation",
+                "line": 18,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvcr.io/nvidia/pytorch:23.10-py3\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "left_occurrences": 4,
+              "right_occurrences": 2
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 45,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "right": {
+                "split": "validation",
+                "line": 12,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "left_occurrences": 3,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 11,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "right": {
+                "split": "validation",
+                "line": 14,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 2
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 71,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 256.00 MiB`"
+              },
+              "right": {
+                "split": "validation",
+                "line": 1,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 256.00 MiB`"
+              },
+              "left_occurrences": 8,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 44,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "right": {
+                "split": "validation",
+                "line": 6,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "left_occurrences": 4,
+              "right_occurrences": 2
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 100,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "right": {
+                "split": "validation",
+                "line": 23,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "left_occurrences": 2,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 32,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\nnvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "right": {
+                "split": "validation",
+                "line": 21,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\nnvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "left_occurrences": 4,
+              "right_occurrences": 1
+            }
+          ]
+        },
+        "shared_instructions": 17,
+        "shared_outputs": 14
+      },
+      "train__test": {
+        "exact": {
+          "shared_groups": 15,
+          "cross_pairs": 117,
+          "examples": [
+            {
+              "left": {
+                "split": "train",
+                "line": 69,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```"
+              },
+              "right": {
+                "split": "test",
+                "line": 1,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```"
+              },
+              "left_occurrences": 2,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 134,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+              },
+              "right": {
+                "split": "test",
+                "line": 9,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 17,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+              },
+              "right": {
+                "split": "test",
+                "line": 8,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 147,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvcr.io/nvidia/pytorch:23.10-py3\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "right": {
+                "split": "test",
+                "line": 3,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvcr.io/nvidia/pytorch:23.10-py3\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "left_occurrences": 3,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 112,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "right": {
+                "split": "test",
+                "line": 2,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "left_occurrences": 2,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 172,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "right": {
+                "split": "test",
+                "line": 12,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 4,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "right": {
+                "split": "test",
+                "line": 13,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "left_occurrences": 7,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 9,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 1.00 GiB`"
+              },
+              "right": {
+                "split": "test",
+                "line": 7,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 1.00 GiB`"
+              },
+              "left_occurrences": 14,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 1,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 2.50 GiB`"
+              },
+              "right": {
+                "split": "test",
+                "line": 4,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 2.50 GiB`"
+              },
+              "left_occurrences": 16,
+              "right_occurrences": 4
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 71,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 256.00 MiB`"
+              },
+              "right": {
+                "split": "test",
+                "line": 6,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 256.00 MiB`"
+              },
+              "left_occurrences": 8,
+              "right_occurrences": 1
+            }
+          ]
+        },
+        "normalized": {
+          "shared_groups": 15,
+          "cross_pairs": 117,
+          "examples": [
+            {
+              "left": {
+                "split": "train",
+                "line": 69,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```"
+              },
+              "right": {
+                "split": "test",
+                "line": 1,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```"
+              },
+              "left_occurrences": 2,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 134,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+              },
+              "right": {
+                "split": "test",
+                "line": 9,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 17,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+              },
+              "right": {
+                "split": "test",
+                "line": 8,
+                "id": null,
+                "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 147,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvcr.io/nvidia/pytorch:23.10-py3\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "right": {
+                "split": "test",
+                "line": 3,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvcr.io/nvidia/pytorch:23.10-py3\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "left_occurrences": 3,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 112,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "right": {
+                "split": "test",
+                "line": 2,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "left_occurrences": 2,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 172,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "right": {
+                "split": "test",
+                "line": 12,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 4,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "right": {
+                "split": "test",
+                "line": 13,
+                "id": null,
+                "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime\nRUN pip install torch\n```\nMake it AMD ROCm compatible."
+              },
+              "left_occurrences": 7,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 9,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 1.00 GiB`"
+              },
+              "right": {
+                "split": "test",
+                "line": 7,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 1.00 GiB`"
+              },
+              "left_occurrences": 14,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 1,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 2.50 GiB`"
+              },
+              "right": {
+                "split": "test",
+                "line": 4,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 2.50 GiB`"
+              },
+              "left_occurrences": 16,
+              "right_occurrences": 4
+            },
+            {
+              "left": {
+                "split": "train",
+                "line": 71,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 256.00 MiB`"
+              },
+              "right": {
+                "split": "test",
+                "line": 6,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 256.00 MiB`"
+              },
+              "left_occurrences": 8,
+              "right_occurrences": 1
+            }
+          ]
+        },
+        "shared_instructions": 16,
+        "shared_outputs": 15
+      },
+      "validation__test": {
+        "exact": {
+          "shared_groups": 3,
+          "cross_pairs": 4,
+          "examples": [
+            {
+              "left": {
+                "split": "validation",
+                "line": 1,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 256.00 MiB`"
+              },
+              "right": {
+                "split": "test",
+                "line": 6,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 256.00 MiB`"
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "validation",
+                "line": 6,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "right": {
+                "split": "test",
+                "line": 11,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "left_occurrences": 2,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "validation",
+                "line": 8,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\nwatch nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "right": {
+                "split": "test",
+                "line": 10,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\nwatch nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            }
+          ]
+        },
+        "normalized": {
+          "shared_groups": 3,
+          "cross_pairs": 4,
+          "examples": [
+            {
+              "left": {
+                "split": "validation",
+                "line": 1,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 256.00 MiB`"
+              },
+              "right": {
+                "split": "test",
+                "line": 6,
+                "id": null,
+                "instruction": "I got this error:\n`torch.cuda.OutOfMemoryError: HIP out of memory. Tried to allocate 256.00 MiB`"
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "validation",
+                "line": 6,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "right": {
+                "split": "test",
+                "line": 11,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "left_occurrences": 2,
+              "right_occurrences": 1
+            },
+            {
+              "left": {
+                "split": "validation",
+                "line": 8,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\nwatch nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "right": {
+                "split": "test",
+                "line": 10,
+                "id": null,
+                "instruction": "I have a health check script:\n```bash\nwatch nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?"
+              },
+              "left_occurrences": 1,
+              "right_occurrences": 1
+            }
+          ]
+        },
+        "shared_instructions": 10,
+        "shared_outputs": 8
+      }
+    },
+    "parameter_consistency": {
+      "train": {
+        "counts": {
+          "consistent": 33,
+          "inconsistent": 125,
+          "not_checkable": 42
+        },
+        "inconsistent_examples": [
+          {
+            "split": "train",
+            "line": 6,
+            "id": null,
+            "instruction": "I have a health check script:\n```bash\nnvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "monitoring",
+              "template_id": "nvidia_smi_v1",
+              "instruction_value": "nvidia-smi",
+              "output_value": "watch nvidia-smi"
+            }
+          },
+          {
+            "split": "train",
+            "line": 7,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "device_selection",
+              "template_id": "hardcoded_device_v1",
+              "instruction_value": "cuda:7",
+              "output_value": "cuda:4"
+            }
+          },
+          {
+            "split": "train",
+            "line": 8,
+            "id": null,
+            "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:12.1.0-base-ubuntu20.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible.",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "containers",
+              "template_id": "cuda_base_image_v1",
+              "instruction_value": "nvidia/cuda:12.1.0-base-ubuntu20.04",
+              "output_value": "nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04"
+            }
+          },
+          {
+            "split": "train",
+            "line": 11,
+            "id": null,
+            "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible.",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "containers",
+              "template_id": "cuda_base_image_v1",
+              "instruction_value": "nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04",
+              "output_value": "nvidia/cuda:12.1.0-base-ubuntu20.04"
+            }
+          },
+          {
+            "split": "train",
+            "line": 12,
+            "id": null,
+            "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvcr.io/nvidia/pytorch:23.10-py3\nRUN pip install torch\n```\nMake it AMD ROCm compatible.",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "containers",
+              "template_id": "cuda_base_image_v1",
+              "instruction_value": "nvcr.io/nvidia/pytorch:23.10-py3",
+              "output_value": "pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime"
+            }
+          },
+          {
+            "split": "train",
+            "line": 13,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "device_selection",
+              "template_id": "hardcoded_device_v1",
+              "instruction_value": "cuda",
+              "output_value": "cuda:7"
+            }
+          },
+          {
+            "split": "train",
+            "line": 15,
+            "id": null,
+            "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "monitoring",
+              "template_id": "nvidia_smi_v1",
+              "instruction_value": "/usr/bin/nvidia-smi",
+              "output_value": "nvidia-smi"
+            }
+          },
+          {
+            "split": "train",
+            "line": 16,
+            "id": null,
+            "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible.",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "containers",
+              "template_id": "cuda_base_image_v1",
+              "instruction_value": "nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04",
+              "output_value": "pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime"
+            }
+          },
+          {
+            "split": "train",
+            "line": 17,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "device_selection",
+              "template_id": "hardcoded_device_v1",
+              "instruction_value": "cuda:7",
+              "output_value": "cuda"
+            }
+          },
+          {
+            "split": "train",
+            "line": 19,
+            "id": null,
+            "instruction": "I have a health check script:\n```bash\nnvidia-smi -l 1 --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "monitoring",
+              "template_id": "nvidia_smi_v1",
+              "instruction_value": "nvidia-smi -l 1",
+              "output_value": "/usr/bin/nvidia-smi"
+            }
+          }
+        ]
+      },
+      "validation": {
+        "counts": {
+          "consistent": 4,
+          "inconsistent": 20,
+          "not_checkable": 1
+        },
+        "inconsistent_examples": [
+          {
+            "split": "validation",
+            "line": 2,
+            "id": null,
+            "instruction": "My requirements.txt has this:\n```text\nbitsandbytes==0.41.1\n```\nWill this work out of the box on MI300X?",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "dependencies",
+              "template_id": "cuda_dependency_v1",
+              "instruction_value": "bitsandbytes==0.41.1",
+              "output_value": "flash-attn==2.3.1.post1"
+            }
+          },
+          {
+            "split": "validation",
+            "line": 3,
+            "id": null,
+            "instruction": "My requirements.txt has this:\n```text\nbitsandbytes==0.41.1\n```\nWill this work out of the box on MI300X?",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "dependencies",
+              "template_id": "cuda_dependency_v1",
+              "instruction_value": "bitsandbytes==0.41.1",
+              "output_value": "bitsandbytes<0.43"
+            }
+          },
+          {
+            "split": "validation",
+            "line": 4,
+            "id": null,
+            "instruction": "My requirements.txt has this:\n```text\nxformers==0.0.22\n```\nWill this work out of the box on MI300X?",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "dependencies",
+              "template_id": "cuda_dependency_v1",
+              "instruction_value": "xformers==0.0.22",
+              "output_value": "bitsandbytes<0.43"
+            }
+          },
+          {
+            "split": "validation",
+            "line": 5,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "device_selection",
+              "template_id": "hardcoded_device_v1",
+              "instruction_value": "cuda:7",
+              "output_value": "cuda:2"
+            }
+          },
+          {
+            "split": "validation",
+            "line": 7,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "device_selection",
+              "template_id": "hardcoded_device_v1",
+              "instruction_value": "cuda",
+              "output_value": "cuda:4"
+            }
+          },
+          {
+            "split": "validation",
+            "line": 8,
+            "id": null,
+            "instruction": "I have a health check script:\n```bash\nwatch nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "monitoring",
+              "template_id": "nvidia_smi_v1",
+              "instruction_value": "watch nvidia-smi",
+              "output_value": "nvidia-smi -l 1"
+            }
+          },
+          {
+            "split": "validation",
+            "line": 9,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "device_selection",
+              "template_id": "hardcoded_device_v1",
+              "instruction_value": "cuda",
+              "output_value": "cuda:3"
+            }
+          },
+          {
+            "split": "validation",
+            "line": 10,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:6'\nmodel.to(device)\n```",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "device_selection",
+              "template_id": "hardcoded_device_v1",
+              "instruction_value": "cuda:6",
+              "output_value": "cuda"
+            }
+          },
+          {
+            "split": "validation",
+            "line": 12,
+            "id": null,
+            "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible.",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "containers",
+              "template_id": "cuda_base_image_v1",
+              "instruction_value": "nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04",
+              "output_value": "nvcr.io/nvidia/pytorch:23.10-py3"
+            }
+          },
+          {
+            "split": "validation",
+            "line": 13,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:4'\nmodel.to(device)\n```",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "device_selection",
+              "template_id": "hardcoded_device_v1",
+              "instruction_value": "cuda:4",
+              "output_value": "cuda"
+            }
+          }
+        ]
+      },
+      "test": {
+        "counts": {
+          "consistent": 4,
+          "inconsistent": 14,
+          "not_checkable": 7
+        },
+        "inconsistent_examples": [
+          {
+            "split": "test",
+            "line": 1,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "device_selection",
+              "template_id": "hardcoded_device_v1",
+              "instruction_value": "cuda",
+              "output_value": "cuda:6"
+            }
+          },
+          {
+            "split": "test",
+            "line": 3,
+            "id": null,
+            "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvcr.io/nvidia/pytorch:23.10-py3\nRUN pip install torch\n```\nMake it AMD ROCm compatible.",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "containers",
+              "template_id": "cuda_base_image_v1",
+              "instruction_value": "nvcr.io/nvidia/pytorch:23.10-py3",
+              "output_value": "nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04"
+            }
+          },
+          {
+            "split": "test",
+            "line": 8,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "device_selection",
+              "template_id": "hardcoded_device_v1",
+              "instruction_value": "cuda:7",
+              "output_value": "cuda"
+            }
+          },
+          {
+            "split": "test",
+            "line": 9,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "device_selection",
+              "template_id": "hardcoded_device_v1",
+              "instruction_value": "cuda:7",
+              "output_value": "cuda:3"
+            }
+          },
+          {
+            "split": "test",
+            "line": 10,
+            "id": null,
+            "instruction": "I have a health check script:\n```bash\nwatch nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "monitoring",
+              "template_id": "nvidia_smi_v1",
+              "instruction_value": "watch nvidia-smi",
+              "output_value": "nvidia-smi -l 1"
+            }
+          },
+          {
+            "split": "test",
+            "line": 12,
+            "id": null,
+            "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime\nRUN pip install torch\n```\nMake it AMD ROCm compatible.",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "containers",
+              "template_id": "cuda_base_image_v1",
+              "instruction_value": "pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime",
+              "output_value": "nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04"
+            }
+          },
+          {
+            "split": "test",
+            "line": 15,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:1'\nmodel.to(device)\n```",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "device_selection",
+              "template_id": "hardcoded_device_v1",
+              "instruction_value": "cuda:1",
+              "output_value": "cuda:2"
+            }
+          },
+          {
+            "split": "test",
+            "line": 16,
+            "id": null,
+            "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "monitoring",
+              "template_id": "nvidia_smi_v1",
+              "instruction_value": "/usr/bin/nvidia-smi",
+              "output_value": "watch nvidia-smi"
+            }
+          },
+          {
+            "split": "test",
+            "line": 17,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "device_selection",
+              "template_id": "hardcoded_device_v1",
+              "instruction_value": "cuda:7",
+              "output_value": "cuda:5"
+            }
+          },
+          {
+            "split": "test",
+            "line": 18,
+            "id": null,
+            "instruction": "I have a health check script:\n```bash\nwatch nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?",
+            "check": {
+              "status": "inconsistent",
+              "method": "inferred",
+              "category": "monitoring",
+              "template_id": "nvidia_smi_v1",
+              "instruction_value": "watch nvidia-smi",
+              "output_value": "nvidia-smi"
+            }
+          }
+        ]
+      }
+    },
+    "possible_train_test_leakage": {
+      "threshold": 0.9,
+      "unique_instruction_pairs": 63,
+      "examples": [
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 3,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:2'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 1,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 3,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:2'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 8,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 3,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:2'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 15,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:1'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 3,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:2'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 20,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:3'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 3,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:2'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 23,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:5'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 5,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:1'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 1,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 5,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:1'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 8,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 5,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:1'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 20,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:3'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 5,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:1'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 23,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:5'\nmodel.to(device)\n```"
+          }
+        },
+        {
+          "similarity": 0.9912,
+          "train": {
+            "split": "train",
+            "line": 7,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```"
+          },
+          "test": {
+            "split": "test",
+            "line": 1,
+            "id": null,
+            "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```"
+          }
+        }
+      ],
+      "method": "difflib.SequenceMatcher over whitespace-normalized unique instructions"
+    },
+    "suspicious_records": [
+      {
+        "split": "train",
+        "line": 6,
+        "id": null,
+        "instruction": "I have a health check script:\n```bash\nnvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?",
+        "check": {
+          "status": "inconsistent",
+          "method": "inferred",
+          "category": "monitoring",
+          "template_id": "nvidia_smi_v1",
+          "instruction_value": "nvidia-smi",
+          "output_value": "watch nvidia-smi"
+        }
+      },
+      {
+        "split": "train",
+        "line": 7,
+        "id": null,
+        "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```",
+        "check": {
+          "status": "inconsistent",
+          "method": "inferred",
+          "category": "device_selection",
+          "template_id": "hardcoded_device_v1",
+          "instruction_value": "cuda:7",
+          "output_value": "cuda:4"
+        }
+      },
+      {
+        "split": "train",
+        "line": 8,
+        "id": null,
+        "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:12.1.0-base-ubuntu20.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible.",
+        "check": {
+          "status": "inconsistent",
+          "method": "inferred",
+          "category": "containers",
+          "template_id": "cuda_base_image_v1",
+          "instruction_value": "nvidia/cuda:12.1.0-base-ubuntu20.04",
+          "output_value": "nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04"
+        }
+      },
+      {
+        "split": "train",
+        "line": 11,
+        "id": null,
+        "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible.",
+        "check": {
+          "status": "inconsistent",
+          "method": "inferred",
+          "category": "containers",
+          "template_id": "cuda_base_image_v1",
+          "instruction_value": "nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04",
+          "output_value": "nvidia/cuda:12.1.0-base-ubuntu20.04"
+        }
+      },
+      {
+        "split": "train",
+        "line": 12,
+        "id": null,
+        "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvcr.io/nvidia/pytorch:23.10-py3\nRUN pip install torch\n```\nMake it AMD ROCm compatible.",
+        "check": {
+          "status": "inconsistent",
+          "method": "inferred",
+          "category": "containers",
+          "template_id": "cuda_base_image_v1",
+          "instruction_value": "nvcr.io/nvidia/pytorch:23.10-py3",
+          "output_value": "pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime"
+        }
+      },
+      {
+        "split": "train",
+        "line": 13,
+        "id": null,
+        "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda'\nmodel.to(device)\n```",
+        "check": {
+          "status": "inconsistent",
+          "method": "inferred",
+          "category": "device_selection",
+          "template_id": "hardcoded_device_v1",
+          "instruction_value": "cuda",
+          "output_value": "cuda:7"
+        }
+      },
+      {
+        "split": "train",
+        "line": 15,
+        "id": null,
+        "instruction": "I have a health check script:\n```bash\n/usr/bin/nvidia-smi --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?",
+        "check": {
+          "status": "inconsistent",
+          "method": "inferred",
+          "category": "monitoring",
+          "template_id": "nvidia_smi_v1",
+          "instruction_value": "/usr/bin/nvidia-smi",
+          "output_value": "nvidia-smi"
+        }
+      },
+      {
+        "split": "train",
+        "line": 16,
+        "id": null,
+        "instruction": "Here is my Dockerfile:\n```dockerfile\nFROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04\nRUN pip install torch\n```\nMake it AMD ROCm compatible.",
+        "check": {
+          "status": "inconsistent",
+          "method": "inferred",
+          "category": "containers",
+          "template_id": "cuda_base_image_v1",
+          "instruction_value": "nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04",
+          "output_value": "pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime"
+        }
+      },
+      {
+        "split": "train",
+        "line": 17,
+        "id": null,
+        "instruction": "Analyze this PyTorch code for ROCm migration issues:\n```python\nimport torch\ndevice = 'cuda:7'\nmodel.to(device)\n```",
+        "check": {
+          "status": "inconsistent",
+          "method": "inferred",
+          "category": "device_selection",
+          "template_id": "hardcoded_device_v1",
+          "instruction_value": "cuda:7",
+          "output_value": "cuda"
+        }
+      },
+      {
+        "split": "train",
+        "line": 19,
+        "id": null,
+        "instruction": "I have a health check script:\n```bash\nnvidia-smi -l 1 --query-gpu=memory.used --format=csv\n```\nWill this work on AMD?",
+        "check": {
+          "status": "inconsistent",
+          "method": "inferred",
+          "category": "monitoring",
+          "template_id": "nvidia_smi_v1",
+          "instruction_value": "nvidia-smi -l 1",
+          "output_value": "/usr/bin/nvidia-smi"
+        }
+      }
+    ]
+  }
+}

@@ -1,5 +1,9 @@
 # AMD Developer Cloud & ROCm Experience Feedback
 
+> **Historical hackathon feedback:** this file records the team's qualitative
+> experience at the time. Product/version claims have not been revalidated for current
+> ROCm releases and should not be treated as a compatibility matrix.
+
 **Team:** AMDeus Ex Machina
 **Track:** Track 2: Fine-Tuning on AMD GPUs
 

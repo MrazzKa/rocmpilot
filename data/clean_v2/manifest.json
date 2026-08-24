@@ -1,0 +1,42 @@
+{
+  "dataset_version": "clean_v2",
+  "generator": "training/generate_dataset.py",
+  "seed": 42,
+  "examples_per_template": 0,
+  "split_strategy": "parameter_holdout",
+  "include_metadata": true,
+  "counts": {
+    "train": 16,
+    "validation": 5,
+    "test": 5
+  },
+  "category_counts": {
+    "train": {
+      "memory": 2,
+      "monitoring": 2,
+      "device_selection": 7,
+      "dependencies": 3,
+      "containers": 2
+    },
+    "validation": {
+      "memory": 1,
+      "dependencies": 1,
+      "monitoring": 1,
+      "containers": 1,
+      "device_selection": 1
+    },
+    "test": {
+      "monitoring": 1,
+      "memory": 1,
+      "containers": 1,
+      "dependencies": 1,
+      "device_selection": 1
+    }
+  },
+  "limitations": [
+    "Synthetic examples still come from five narrow template families.",
+    "Parameter holdout reduces exact split overlap but does not remove template-level similarity.",
+    "This dataset is separate from the manually curated challenge benchmark.",
+    "The published hackathon adapter was trained on data/*.jsonl, not this version."
+  ]
+}

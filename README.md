@@ -1,143 +1,219 @@
 # ROCmPilot
 
-**Team:** AMDeus Ex Machina  
-**Hackathon:** AMD Developer Hackathon by lablab.ai  
-**Track:** Track 2: Fine-Tuning on AMD GPUs  
+ROCmPilot is a CUDA-to-AMD-ROCm migration assistant built during the AMD Developer
+Hackathon by lablab.ai (Track 2, team **AMDeus Ex Machina**). The project combines a
+Qwen2.5-Coder base model, a PEFT LoRA adapter, and a Gradio application with a
+deterministic rule-based demo mode.
 
----
+This repository now separates the historical hackathon result from post-hackathon
+data-quality and evaluation work. The published adapter exists and the training run is
+logged; a defensible base-vs-adapter challenge evaluation has **not yet been run**.
 
-## Description
-**ROCmPilot** is a specialized, fine-tuned AI code migration assistant designed to help developers, ML engineers, and MLOps/DevOps professionals seamlessly migrate CUDA-first AI workloads to **AMD ROCm** environments. 
+## Evidence status
 
-When migrating from NVIDIA GPUs to AMD Instinct accelerators (like the MI300X), developers often encounter hidden hurdles: hardcoded `cuda:0` devices, CUDA-specific Docker base images, NVIDIA-only PyTorch extensions, and opaque runtime errors. 
+| Item | Status | Evidence / limitation |
+| --- | --- | --- |
+| LoRA training on AMD Instinct MI300X | Historical project result | A 15-step run and adapter save are recorded in `reports/training_log.txt`; exact environment versions were not pinned. |
+| Published PEFT adapter | Available | [`MrazzKa/rocmpilot-qwen25-coder-lora`](https://huggingface.co/MrazzKa/rocmpilot-qwen25-coder-lora) |
+| Historical synthetic corpus | Preserved | 250 records in `data/*.jsonl`; it contains duplicates, template leakage, and instruction/target mismatches. |
+| Clean synthetic v2 | Generated | 26 consistent parameter variants under `data/clean_v2/`; parameter values are held out across splits, but all examples still use five narrow template families. |
+| Independent challenge benchmark | Curated, not executed | 8 evaluation-only scenarios with rubrics and official AMD/PyTorch sources in `data/challenge_eval.jsonl`. |
+| Base-vs-LoRA results | Pending | The real pipeline is implemented, but no model inference was run during this update. |
 
-General LLMs often provide generic, unhelpful answers when dealing with niche ROCm issues. ROCmPilot is fine-tuned specifically on a dataset of CUDA-to-ROCm migration scenarios to provide **concrete fixes, verification commands, and environment-specific debugging steps.**
+## What was done during the hackathon
 
----
-
-## Problem & Solution
-**The Problem:** The AI ecosystem currently has a strong bias towards CUDA. Moving workloads to AMD hardware is highly cost-effective and performant, but developers often lack the domain knowledge to troubleshoot PyTorch ROCm builds, vLLM serving configurations, or Docker container migrations.
-
-**The Solution:** ROCmPilot analyzes Python code, runtime error logs, and Dockerfiles to pinpoint CUDA assumptions and provides actionable ROCm-compatible replacements. 
-
----
-
-## Track 2: Fine-Tuning on AMD GPUs
-We built a synthetic instruction dataset of 240+ common CUDA-to-ROCm migration issues. We then used **PEFT LoRA** to fine-tune `Qwen/Qwen2.5-Coder-1.5B-Instruct` directly on an **AMD Instinct MI300X** instance provided via the AMD Developer Cloud. This model is explicitly adapted to understand ROCm ecosystem quirks that general base models frequently miss.
-
----
-
-## Architecture & Tech Stack
-- **Compute Target:** AMD Instinct MI300X (AMD Developer Cloud)
-- **Base Model:** `Qwen/Qwen2.5-Coder-1.5B-Instruct`
-- **Fine-Tuning Method:** LoRA / PEFT using Hugging Face `transformers` and `trl`.
-- **Framework:** PyTorch (ROCm build)
-- **Web App:** Gradio (hosted on Hugging Face Spaces)
-
----
-
-## Links
-- **Hugging Face Space (Live Demo):** [https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/ROCmPilot](https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/ROCmPilot)
-- **Model Adapter:** [https://huggingface.co/MrazzKa/rocmpilot-qwen25-coder-lora](https://huggingface.co/MrazzKa/rocmpilot-qwen25-coder-lora)
-- **GitHub Repository:** [https://github.com/MrazzKa/rocmpilot](https://github.com/MrazzKa/rocmpilot)
-
----
-
-## Fine-tuning Proof
-
-ROCmPilot was fine-tuned with LoRA on AMD Instinct MI300X using AMD Developer Cloud and ROCm/PyTorch.
-
-Training setup:
-- GPU: AMD Instinct MI300X
-- Framework: PyTorch on ROCm
-- Base model: Qwen/Qwen2.5-Coder-1.5B-Instruct
+- Base model: `Qwen/Qwen2.5-Coder-1.5B-Instruct`
 - Fine-tuning method: PEFT LoRA
-- Trainable parameters: 18,464,768
-- Dataset: 250 synthetic CUDA-to-ROCm migration examples
-- Training proof: 15-step LoRA run with decreasing loss
-- Output: LoRA adapter published on Hugging Face
+- Reported compute: AMD Instinct MI300X on AMD Developer Cloud
+- Historical corpus: 200 train, 25 validation, and 25 test records generated from
+  five synthetic template families
+- Logged run: 15 optimizer steps and 18,464,768 trainable parameters
+- Output: a LoRA adapter published on Hugging Face
+- Application: a Gradio interface with code, error-log, and environment analysis tabs
 
-Adapter:
-https://huggingface.co/MrazzKa/rocmpilot-qwen25-coder-lora
+The training log shows decreasing **training loss**. Validation was loaded by the
+historical script but disabled, so the run did not record validation loss. See
+[`docs/experiment_history.md`](docs/experiment_history.md) for the exact distinction
+between supported facts and unknown historical details.
 
----
+## Post-hackathon audit
 
-## Demo Modes
-To ensure the Hugging Face Space remains reliable on free CPU tiers, ROCmPilot includes two modes:
-1. **Demo Mode (Default):** A deterministic, rule-based inference engine that detects common ROCm migration patterns and outputs realistic, structured guidance. This guarantees the app is always fast and functional for hackathon evaluation.
-2. **Live Model Mode:** Set `USE_LIVE_MODEL=true` in the environment variables to load the actual Qwen2.5-Coder model with our LoRA adapter for dynamic generation.
+The audit confirmed that the original generator sampled template parameters
+independently for instructions and targets. Among the checks that could recover both
+values, it found 125 inconsistent train records, 20 inconsistent validation records,
+and 14 inconsistent test records. The train split contains only 85 unique content
+records out of 200; train and test share 15 exact content groups and 16 distinct
+instruction strings.
 
----
+The old `training/evaluate.py` also wrote a static comparison instead of loading the
+models. Its claims are retained as historical, unmeasured claims in
+[`reports/historical_hackathon_eval.md`](reports/historical_hackathon_eval.md), not as
+benchmark results.
 
-## Dataset & Evaluation
-- **Dataset:** `data/train.jsonl`, `val.jsonl`, `test.jsonl` containing 240+ self-authored, high-quality instruction pairs covering:
-  - Hardcoded device usage
-  - NVIDIA Docker base images
-  - `nvidia-smi` vs `rocm-smi`
-  - Quantization & dependency issues (`bitsandbytes`, `flash-attn`)
-  - ROCm PyTorch memory errors
-- **Evaluation:** We benchmarked the base model against the fine-tuned adapter. The fine-tuned model provides more accurate ROCm verification commands (e.g., using `rocm-smi` instead of hallucinating CUDA APIs) and recognizes ROCm-specific Docker images. See `reports/eval_results.md` for details.
+Full findings:
 
----
+- Human-readable audit: [`reports/data_audit.md`](reports/data_audit.md)
+- Machine-readable audit: [`reports/data_audit.json`](reports/data_audit.json)
+- Pre-change interpretation: [`docs/research_audit.md`](docs/research_audit.md)
 
-## How to Run Locally
+## Data layout
 
-1. **Clone the repository:**
-```bash
-git clone https://github.com/MrazzKa/rocmpilot.git
-cd rocmpilot
+```text
+data/
+├── train.jsonl, val.jsonl, test.jsonl  # historical adapter data; preserved
+├── clean_v2/                           # corrected synthetic data + manifest
+└── challenge_eval.jsonl                # evaluation only; never training data
 ```
 
-2. **Install dependencies:**
-```bash
-pip install -r requirements.txt
+`training/generate_dataset.py` samples every parameter once per record and reuses it
+in the instruction and target. A fixed seed makes generation deterministic. The
+default emits each available parameter value once rather than inflating the corpus
+with exact repeats. Its parameter-holdout split prevents the same parameter value
+from crossing splits.
+
+This does not solve template-level similarity: clean v2 still has only five families.
+Its validation split is useful for pipeline diagnostics, not a strong generalization
+claim. The separate challenge set tests more varied behavior such as PyTorch HIP
+backend detection, distributed backend naming, container device exposure, HIPIFY
+limitations, GPU isolation, telemetry parser migration, allocator reasoning, and C++
+version guards.
+
+## Real base-vs-LoRA evaluation
+
+`training/evaluate_benchmark.py` runs the same prompts with deterministic decoding
+(`do_sample=False`) first on the base model and then on the published adapter. It
+saves every prompt, rubric, reference, generation, and per-example metric breakdown.
+
+Metrics are reported overall and by category:
+
+- expected Markdown-section compliance;
+- required-concept coverage;
+- forbidden/incorrect-concept avoidance;
+- item-specific input/output consistency;
+- ROUGE-L as a secondary overlap description only;
+- optional paired bootstrap intervals for adapter-minus-base differences.
+
+These lexical metrics are interpretable but imperfect. They do not replace expert
+review or execution of generated code. The report generator refuses to create a
+completed report without actual predictions. Current status:
+[`reports/eval_results.md`](reports/eval_results.md).
+
+An evaluation run writes:
+
+```text
+reports/benchmark_predictions.jsonl
+reports/benchmark_results.json
+reports/benchmark_results.csv
+reports/eval_results.md
 ```
 
-3. **Start the Gradio App:**
+## Setup and demo
+
 ```bash
+python -m venv .venv
+# Activate the environment using the command for your shell.
+python -m pip install -r requirements.txt
 python app.py
 ```
 
-*Note: By default, the app runs in `DEMO_MODE`. To use the live Hugging Face model, run:*
+The default app mode is deterministic and rule-based so it can run on a CPU-hosted
+Space. To load the adapter in the application, set `USE_LIVE_MODEL=true`. Live mode
+downloads model artifacts and can be slow on CPU.
+
+- [Hugging Face Space](https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/ROCmPilot)
+- [Published adapter](https://huggingface.co/MrazzKa/rocmpilot-qwen25-coder-lora)
+
+## Reproducible data and audit commands
+
+Generate clean v2 without touching the historical JSONL files:
+
 ```bash
-USE_LIVE_MODEL=true python app.py
+python training/generate_dataset.py --seed 42
 ```
 
----
+The generator refuses to overwrite an existing clean dataset unless `--overwrite` is
+explicitly supplied.
 
-## How to Reproduce Fine-Tuning
+Audit the historical corpus:
 
-1. Install training dependencies:
 ```bash
-pip install -r requirements-training.txt
+python training/audit_dataset.py \
+  --train data/train.jsonl \
+  --validation data/val.jsonl \
+  --test data/test.jsonl \
+  --output-json reports/data_audit.json \
+  --output-md reports/data_audit.md
 ```
 
-2. Generate the synthetic dataset:
+Audit clean v2 by replacing the three input paths and output names with the
+`data/clean_v2/*` and `reports/data_audit_clean_v2.*` paths.
+
+## Run the challenge evaluation
+
+Install model-training/evaluation dependencies first:
+
 ```bash
-python training/generate_dataset.py
+python -m pip install -r requirements-training.txt
+python training/evaluate_benchmark.py \
+  --base-model Qwen/Qwen2.5-Coder-1.5B-Instruct \
+  --adapter MrazzKa/rocmpilot-qwen25-coder-lora \
+  --dataset data/challenge_eval.jsonl \
+  --output-dir reports \
+  --device auto \
+  --max-new-tokens 512 \
+  --seed 42
 ```
 
-3. Run the LoRA fine-tuning script (Optimized for AMD MI300X):
+This downloads the base model and adapter if they are not cached. CPU execution is
+supported but expected to be slow. Use `--limit 1` for a pipeline smoke test; do not
+present that smoke test as the benchmark.
+
+## Future training on clean v2
+
+The following starts a **new experiment** with validation and checkpointing; it does
+not reproduce or overwrite the published adapter:
+
 ```bash
 python training/train_lora.py \
-    --model_name "Qwen/Qwen2.5-Coder-1.5B-Instruct" \
-    --train_file "data/train.jsonl" \
-    --val_file "data/val.jsonl" \
-    --output_dir "outputs/rocmpilot-qwen25-coder-lora" \
-    --epochs 1 \
-    --learning_rate 2e-4
+  --model-name Qwen/Qwen2.5-Coder-1.5B-Instruct \
+  --train-file data/clean_v2/train.jsonl \
+  --val-file data/clean_v2/val.jsonl \
+  --output-dir outputs/rocmpilot-clean-v2-lora \
+  --epochs 3 \
+  --max-steps -1 \
+  --evaluation-strategy epoch \
+  --save-strategy epoch \
+  --load-best-model-at-end \
+  --seed 42
 ```
 
----
+The output directory receives checkpoints, trainer state, tokenizer/adapter files,
+and `experiment_metadata.json` with arguments, dataset sizes, package versions, and
+backend information. For a serious new training run, create a larger independently
+reviewed training corpus and lock the environment on the target ROCm host; clean v2
+is intentionally small and narrow.
 
-## Limitations & Future Work
-- **Limitations:** The model provides migration guidance and cannot guarantee 100% bug-free migrations. PyTorch ROCm environments evolve rapidly, so dependencies may change.
-- **Future Work:**
-  - Automated pull request generation via GitHub API.
-  - Expand the dataset to include multi-node Ray cluster migration on AMD GPUs.
-  - Integration into VS Code / Cursor as a native extension.
+## Tests
 
----
+```bash
+python -m pip install -r requirements-dev.txt
+python -m pytest -q
+```
+
+Tests cover deterministic/consistent generation, parameter-holdout splitting,
+duplicate and leakage detection, challenge JSONL validity, benchmark metrics, and the
+requirement that completed reports derive from actual result objects.
+
+## Limitations
+
+- No measured base-vs-LoRA result is currently committed.
+- The published adapter was trained on flawed, highly repetitive synthetic data.
+- The challenge benchmark is small, and rubric matching can miss valid paraphrases or
+  fail to detect subtle technical errors.
+- ROCm interfaces and package support change over time; benchmark references are
+  stored per item and guidance must be rechecked for the deployment version.
+- Generated migrations require execution and expert review on the target hardware.
 
 ## License
-MIT License. See `LICENSE` for details.
+
+MIT License. See [`LICENSE`](LICENSE).

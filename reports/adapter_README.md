@@ -34,10 +34,22 @@ The corrected `data/clean_v2/` dataset in the repository was created later and w
 
 ## Evaluation status
 
-The original repository contained a static qualitative comparison, not executable
-base-vs-adapter inference. A reproducible challenge pipeline has since been added, but
-results are pending until the base model and adapter are actually run and raw
-generations are saved. Do not claim measured improvement from this model card.
+The original repository contained a static qualitative comparison rather than
+executable inference. A later held-out run compared the base model and this adapter
+on eight manually curated ROCm migration scenarios with identical deterministic
+decoding settings.
+
+| Metric | Base | Adapter |
+| --- | ---: | ---: |
+| Structural compliance | 0.1250 | 0.7969 |
+| Required-concept coverage | 0.2083 | 0.2083 |
+
+Manual review assigned 2 examples to the base model, 0 to the adapter, 3 ties, and 3
+unclear verdicts. The adapter learned the requested response structure strongly, but
+did not demonstrate improved ROCm technical knowledge or held-out generalization.
+The repository preserves all raw generations, environment metadata, automatic
+metrics, and per-example manual reasoning under
+`reports/runs/colab-t4-2026-08-25/`.
 
 ## Intended use
 
@@ -59,6 +71,8 @@ generations are saved. Do not claim measured improvement from this model card.
 - ROCm, PyTorch, containers, and third-party package compatibility change over time.
 - The adapter can emit plausible but incorrect commands, versions, flags, or API
   substitutions.
+- Held-out generations showed repetition, prompt echoing, and technical errors; many
+  reached the 512-token output limit.
 - The logged run contains training loss but no validation loss.
 
 Every suggestion should be checked against official documentation for the deployed

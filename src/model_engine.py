@@ -27,9 +27,6 @@ def init_model():
         logger.info(f"Loading base model: {BASE_MODEL_NAME}")
         tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_NAME)
         
-        # Determine device
-        device = "cuda" if torch.cuda.is_available() else "cpu"
-        
         base_model = AutoModelForCausalLM.from_pretrained(
             BASE_MODEL_NAME,
             torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,

@@ -1,9 +1,1 @@
-gradio
-huggingface_hub<0.27.0
-transformers
-accelerate
-peft
-datasets
-torch
-sentencepiece
-protobuf
+gradio>=6,<7

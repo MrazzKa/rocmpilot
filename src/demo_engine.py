@@ -1,5 +1,4 @@
 # demo_engine.py
-import re
 
 def analyze_code_demo(input_text: str) -> str:
     # Basic rule-based engine for Demo Mode

@@ -3,6 +3,8 @@ __pycache__/
 *$py.class
 *.so
 .Python
+.DS_Store
+Thumbs.db
 env/
 build/
 develop-eggs/
@@ -29,6 +31,12 @@ outputs/
 cache/
 logs/
 .env
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.zip
 
 # Model weights (if any downloaded)
 *.safetensors
@@ -36,7 +44,4 @@ logs/
 *.pt
 
 # Jupyter Notebooks
-.ipynb_checkpoints
-
-__pycache__/
-*.pyc
+.ipynb_checkpoints/

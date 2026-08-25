@@ -1,6 +1,7 @@
 import gradio as gr
-from src.model_engine import process_code, process_error, process_env, USE_LIVE_MODEL
+
 from src.examples import CODE_EXAMPLES, ERROR_EXAMPLES, DOCKER_EXAMPLES
+from src.model_engine import process_code, process_error, process_env
 
 # Create dictionaries for dropdowns
 code_examples_dict = {item[0]: item[1] for item in CODE_EXAMPLES}
@@ -51,7 +52,7 @@ body {
 }
 """
 
-with gr.Blocks(css=css, theme=gr.themes.Monochrome()) as demo:
+with gr.Blocks() as demo:
     with gr.Column(elem_classes="container"):
         with gr.Column(elem_classes="header"):
             gr.Markdown("<div class='title'>ROCmPilot</div>")
@@ -128,4 +129,10 @@ with gr.Blocks(css=css, theme=gr.themes.Monochrome()) as demo:
             gr.Markdown("ROCmPilot provides migration guidance. Always test generated changes in your target ROCm environment.")
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=7860, share=False)
+    demo.launch(
+        server_name="0.0.0.0",
+        server_port=7860,
+        share=False,
+        css=css,
+        theme=gr.themes.Monochrome(),
+    )

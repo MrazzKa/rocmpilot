@@ -1,138 +1,98 @@
 # ROCmPilot
 
-ROCmPilot is a CUDA-to-AMD-ROCm migration assistant built during the AMD Developer
-Hackathon by lablab.ai (Track 2, team **AMDeus Ex Machina**). The project combines a
-Qwen2.5-Coder base model, a PEFT LoRA adapter, and a Gradio application with a
-deterministic rule-based demo mode.
+[![tests](https://github.com/MrazzKa/rocmpilot/actions/workflows/tests.yml/badge.svg)](https://github.com/MrazzKa/rocmpilot/actions/workflows/tests.yml)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-This repository now separates the historical hackathon result from post-hackathon
-data-quality and evaluation work. The published adapter exists and the training run is
-logged; a defensible base-vs-adapter challenge evaluation has **not yet been run**.
+ROCmPilot is an experimental CUDA-to-AMD-ROCm migration assistant created for the
+AMD Developer Hackathon by lablab.ai (Track 2, team **AMDeus Ex Machina**). It
+combines a Qwen2.5-Coder base model, a historical PEFT LoRA adapter, a Gradio demo,
+and a reproducible research pipeline for auditing data and comparing model outputs.
+
+> **Research result:** the held-out benchmark shows that the historical LoRA learned
+> the requested response structure strongly, but did **not** demonstrate better ROCm
+> technical knowledge or generalization than the base model.
+
+- [Live Gradio demo](https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/ROCmPilot)
+- [Published LoRA adapter](https://huggingface.co/MrazzKa/rocmpilot-qwen25-coder-lora)
+- [Experiment history](docs/experiment_history.md)
+- [Post-hackathon research audit](docs/research_audit.md)
+
+## Experiment 1: held-out base vs. LoRA
+
+Experiment 1 ran once on a Tesla T4 with 14.56 GiB VRAM. It compared
+`Qwen/Qwen2.5-Coder-1.5B-Instruct` with the historical ROCmPilot LoRA on eight
+evaluation-only challenge examples using deterministic decoding (`do_sample=False`,
+seed 42, maximum 512 new tokens).
+
+| Metric | Base | Historical LoRA | LoRA - Base |
+| --- | ---: | ---: | ---: |
+| Structural compliance | 0.1250 | 0.7969 | +0.6719 |
+| Required-concept coverage | 0.2083 | 0.2083 | 0.0000 |
+| Forbidden-concept avoidance | 1.0000 | 0.8750 | -0.1250 |
+| Input/output consistency | 0.9375 | 0.8750 | -0.0625 |
+| ROUGE-L F1 | 0.1722 | 0.1768 | +0.0046 |
+
+Manual technical review: **Base 2, LoRA 0, Tie 3, Unclear 3**. The automatic
+metrics capture formatting and declared lexical concepts; they are not correctness
+judges.
+
+Experiment artifacts are immutable and versioned under
+[`reports/runs/colab-t4-2026-08-25/`](reports/runs/colab-t4-2026-08-25/):
+
+- [generated evaluation report](reports/runs/colab-t4-2026-08-25/eval_results.md);
+- [manual review of all eight pairs](reports/runs/colab-t4-2026-08-25/manual_review.md);
+- [raw base and LoRA generations](reports/runs/colab-t4-2026-08-25/benchmark_predictions.jsonl);
+- [machine-readable metrics](reports/runs/colab-t4-2026-08-25/benchmark_results.json);
+- [hardware and package metadata](reports/runs/colab-t4-2026-08-25/evaluation_environment.txt).
 
 ## Evidence status
 
-| Item | Status | Evidence / limitation |
+| Item | Status | Evidence or limitation |
 | --- | --- | --- |
-| LoRA training on AMD Instinct MI300X | Historical project result | A 15-step run and adapter save are recorded in `reports/training_log.txt`; exact environment versions were not pinned. |
-| Published PEFT adapter | Available | [`MrazzKa/rocmpilot-qwen25-coder-lora`](https://huggingface.co/MrazzKa/rocmpilot-qwen25-coder-lora) |
-| Historical synthetic corpus | Preserved | 250 records in `data/*.jsonl`; it contains duplicates, template leakage, and instruction/target mismatches. |
-| Clean synthetic v2 | Generated | 26 consistent parameter variants under `data/clean_v2/`; parameter values are held out across splits, but all examples still use five narrow template families. |
-| Independent challenge benchmark | Curated, not executed | 8 evaluation-only scenarios with rubrics and official AMD/PyTorch sources in `data/challenge_eval.jsonl`. |
-| Base-vs-LoRA results | Pending | The real pipeline is implemented, but no model inference was run during this update. |
+| Historical LoRA training | Recorded project result | A 15-step run on a reported AMD Instinct MI300X is preserved in `reports/training_log.txt`; validation was disabled and exact package versions were not pinned. |
+| Published adapter | Available | The PEFT adapter is hosted on Hugging Face. |
+| Historical synthetic corpus | Preserved and audited | The 250 records in `data/*.jsonl` contain duplicates, cross-split leakage, and instruction/target mismatches. |
+| Clean synthetic v2 | Generated, not trained | The corrected 26-record corpus under `data/clean_v2/` is useful for pipeline tests but remains narrow and synthetic. |
+| Held-out challenge set | Executed | Eight manually curated, evaluation-only examples with declared rubrics and official sources. |
+| Base-vs-LoRA comparison | Completed | Raw generations, metrics, environment metadata, and manual verdicts are committed. |
 
-## What was done during the hackathon
+## Repository map
 
-- Base model: `Qwen/Qwen2.5-Coder-1.5B-Instruct`
-- Fine-tuning method: PEFT LoRA
-- Reported compute: AMD Instinct MI300X on AMD Developer Cloud
-- Historical corpus: 200 train, 25 validation, and 25 test records generated from
-  five synthetic template families
-- Logged run: 15 optimizer steps and 18,464,768 trainable parameters
-- Output: a LoRA adapter published on Hugging Face
-- Application: a Gradio interface with code, error-log, and environment analysis tabs
+| Path | Purpose |
+| --- | --- |
+| `app.py`, `src/` | Gradio interface, deterministic demo engine, and optional live-model loader |
+| `training/evaluate_benchmark.py` | Reproducible base-vs-LoRA generation and reporting pipeline |
+| `training/audit_dataset.py` | Duplicate, overlap, consistency, and leakage audit |
+| `training/generate_dataset.py` | Deterministic corrected synthetic-data generator |
+| `training/train_lora.py` | Revised training entry point for future experiments; not a reproduction of the historical adapter |
+| `data/challenge_eval.jsonl` | Evaluation only; it must never be used for training |
+| `reports/runs/colab-t4-2026-08-25/` | Immutable Experiment 1 results |
+| `notebooks/rocmpilot_benchmark_colab.ipynb` | Colab workflow for executing the GPU benchmark protocol |
+| `docs/` | Historical evidence boundaries, audit findings, and future protocol |
 
-The training log shows decreasing **training loss**. Validation was loaded by the
-historical script but disabled, so the run did not record validation loss. See
-[`docs/experiment_history.md`](docs/experiment_history.md) for the exact distinction
-between supported facts and unknown historical details.
+## Quick start: deterministic demo
 
-## Post-hackathon audit
-
-The audit confirmed that the original generator sampled template parameters
-independently for instructions and targets. Among the checks that could recover both
-values, it found 125 inconsistent train records, 20 inconsistent validation records,
-and 14 inconsistent test records. The train split contains only 85 unique content
-records out of 200; train and test share 15 exact content groups and 16 distinct
-instruction strings.
-
-The old `training/evaluate.py` also wrote a static comparison instead of loading the
-models. Its claims are retained as historical, unmeasured claims in
-[`reports/historical_hackathon_eval.md`](reports/historical_hackathon_eval.md), not as
-benchmark results.
-
-Full findings:
-
-- Human-readable audit: [`reports/data_audit.md`](reports/data_audit.md)
-- Machine-readable audit: [`reports/data_audit.json`](reports/data_audit.json)
-- Pre-change interpretation: [`docs/research_audit.md`](docs/research_audit.md)
-
-## Data layout
-
-```text
-data/
-├── train.jsonl, val.jsonl, test.jsonl  # historical adapter data; preserved
-├── clean_v2/                           # corrected synthetic data + manifest
-└── challenge_eval.jsonl                # evaluation only; never training data
-```
-
-`training/generate_dataset.py` samples every parameter once per record and reuses it
-in the instruction and target. A fixed seed makes generation deterministic. The
-default emits each available parameter value once rather than inflating the corpus
-with exact repeats. Its parameter-holdout split prevents the same parameter value
-from crossing splits.
-
-This does not solve template-level similarity: clean v2 still has only five families.
-Its validation split is useful for pipeline diagnostics, not a strong generalization
-claim. The separate challenge set tests more varied behavior such as PyTorch HIP
-backend detection, distributed backend naming, container device exposure, HIPIFY
-limitations, GPU isolation, telemetry parser migration, allocator reasoning, and C++
-version guards.
-
-## Real base-vs-LoRA evaluation
-
-`training/evaluate_benchmark.py` runs the same prompts with deterministic decoding
-(`do_sample=False`) first on the base model and then on the published adapter. It
-saves every prompt, rubric, reference, generation, and per-example metric breakdown.
-
-Metrics are reported overall and by category:
-
-- expected Markdown-section compliance;
-- required-concept coverage;
-- forbidden/incorrect-concept avoidance;
-- item-specific input/output consistency;
-- ROUGE-L as a secondary overlap description only;
-- optional paired bootstrap intervals for adapter-minus-base differences.
-
-These lexical metrics are interpretable but imperfect. They do not replace expert
-review or execution of generated code. The report generator refuses to create a
-completed report without actual predictions. Current status:
-[`reports/eval_results.md`](reports/eval_results.md).
-
-An evaluation run writes:
-
-```text
-reports/benchmark_predictions.jsonl
-reports/benchmark_results.json
-reports/benchmark_results.csv
-reports/eval_results.md
-```
-
-## Setup and demo
+The default application does not download model weights. It runs a deterministic,
+rule-based demonstration suitable for a CPU machine or a quick project review.
 
 ```bash
 python -m venv .venv
-# Activate the environment using the command for your shell.
 python -m pip install -r requirements.txt
 python app.py
 ```
 
-The default app mode is deterministic and rule-based so it can run on a CPU-hosted
-Space. To load the adapter in the application, set `USE_LIVE_MODEL=true`. Live mode
-downloads model artifacts and can be slow on CPU.
+Set `USE_LIVE_MODEL=true` only after installing `requirements-training.txt` and when
+the machine has enough memory for the base model plus adapter. If live loading fails,
+the application explicitly falls back to the labelled rule-based demo rather than
+presenting the base model as the fine-tuned system.
 
-- [Hugging Face Space](https://huggingface.co/spaces/lablab-ai-amd-developer-hackathon/ROCmPilot)
-- [Published adapter](https://huggingface.co/MrazzKa/rocmpilot-qwen25-coder-lora)
+## Reproduce audits
 
-## Reproducible data and audit commands
-
-Generate clean v2 without touching the historical JSONL files:
+Generate clean v2 without modifying the historical JSONL files:
 
 ```bash
 python training/generate_dataset.py --seed 42
 ```
-
-The generator refuses to overwrite an existing clean dataset unless `--overwrite` is
-explicitly supplied.
 
 Audit the historical corpus:
 
@@ -145,75 +105,64 @@ python training/audit_dataset.py \
   --output-md reports/data_audit.md
 ```
 
-Audit clean v2 by replacing the three input paths and output names with the
-`data/clean_v2/*` and `reports/data_audit_clean_v2.*` paths.
+Generated reports are available as
+[`reports/data_audit.md`](reports/data_audit.md) and
+[`reports/data_audit_clean_v2.md`](reports/data_audit_clean_v2.md).
 
-## Run the challenge evaluation
+## Evaluation protocol
 
-Install model-training/evaluation dependencies first:
+The completed Experiment 1 must not be overwritten or presented as a larger study.
+The evaluation script remains available for an explicitly named future replication,
+and the [Colab notebook](notebooks/rocmpilot_benchmark_colab.ipynb) provides GPU,
+metadata, smoke-test, confirmation, full-run, review, and result-download cells.
 
-```bash
-python -m pip install -r requirements-training.txt
-python training/evaluate_benchmark.py \
-  --base-model Qwen/Qwen2.5-Coder-1.5B-Instruct \
-  --adapter MrazzKa/rocmpilot-qwen25-coder-lora \
-  --dataset data/challenge_eval.jsonl \
-  --output-dir reports \
-  --device auto \
-  --max-new-tokens 512 \
-  --seed 42
-```
+The protocol:
 
-This downloads the base model and adapter if they are not cached. CPU execution is
-supported but expected to be slow. Use `--limit 1` for a pipeline smoke test; do not
-present that smoke test as the benchmark.
+1. runs identical prompts and decoding settings for base and adapter;
+2. saves all prompts, references, generations, rubrics, and per-example metrics;
+3. keeps `data/challenge_eval.jsonl` permanently separate from training;
+4. treats lexical scores as descriptive and requires manual technical review.
 
-## Future training on clean v2
+Use a new output directory for any future replication. Never replace the committed
+Experiment 1 files after inspecting model outputs.
 
-The following starts a **new experiment** with validation and checkpointing; it does
-not reproduce or overwrite the published adapter:
+## Historical training context
 
-```bash
-python training/train_lora.py \
-  --model-name Qwen/Qwen2.5-Coder-1.5B-Instruct \
-  --train-file data/clean_v2/train.jsonl \
-  --val-file data/clean_v2/val.jsonl \
-  --output-dir outputs/rocmpilot-clean-v2-lora \
-  --epochs 3 \
-  --max-steps -1 \
-  --evaluation-strategy epoch \
-  --save-strategy epoch \
-  --load-best-model-at-end \
-  --seed 42
-```
+The published adapter was trained on 200 historical training records from five
+synthetic template families. The log records 18,464,768 trainable parameters and
+decreasing training loss, but no validation metrics. A later audit found only 85
+unique train records, cross-split overlap, and many parameter mismatches.
 
-The output directory receives checkpoints, trainer state, tokenizer/adapter files,
-and `experiment_metadata.json` with arguments, dataset sizes, package versions, and
-backend information. For a serious new training run, create a larger independently
-reviewed training corpus and lock the environment on the target ROCm host; clean v2
-is intentionally small and narrow.
+The corrected `data/clean_v2/` corpus was created after the hackathon and was not used
+for the published adapter. Training on it would be a new experiment and is not part
+of the committed result.
 
 ## Tests
 
 ```bash
 python -m pip install -r requirements-dev.txt
 python -m pytest -q
+ruff check app.py src training tests
+python -m compileall -q app.py src training tests
 ```
 
-Tests cover deterministic/consistent generation, parameter-holdout splitting,
-duplicate and leakage detection, challenge JSONL validity, benchmark metrics, and the
-requirement that completed reports derive from actual result objects.
+Tests cover deterministic data generation, parameter consistency, split separation,
+audit findings, challenge-set validity, benchmark metrics, and report generation.
+GitHub Actions runs the same checks on pushes and pull requests.
 
 ## Limitations
 
-- No measured base-vs-LoRA result is currently committed.
-- The published adapter was trained on flawed, highly repetitive synthetic data.
-- The challenge benchmark is small, and rubric matching can miss valid paraphrases or
-  fail to detect subtle technical errors.
-- ROCm interfaces and package support change over time; benchmark references are
-  stored per item and guidance must be rechecked for the deployment version.
-- Generated migrations require execution and expert review on the target hardware.
+- Experiment 1 has only eight examples.
+- Many generations reached the 512-token limit and showed repetition or truncated
+  endings.
+- At least one lexical forbidden-concept result was a false positive because the
+  model quoted an incorrect concept while rejecting it.
+- The historical adapter was trained on flawed, repetitive synthetic data.
+- The benchmark does not establish statistical significance or broad
+  generalization.
+- Generated migration advice requires official-documentation checks, execution, and
+  expert review on the target ROCm environment.
 
 ## License
 
-MIT License. See [`LICENSE`](LICENSE).
+MIT License. See [LICENSE](LICENSE).

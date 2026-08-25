@@ -1,0 +1,7 @@
+# Completed Experiment 1 outputs are immutable binary artifacts for Git purposes.
+reports/runs/colab-t4-2026-08-25/benchmark_predictions.jsonl -text -whitespace
+reports/runs/colab-t4-2026-08-25/benchmark_results.json -text -whitespace
+reports/runs/colab-t4-2026-08-25/benchmark_results.csv -text -whitespace
+reports/runs/colab-t4-2026-08-25/eval_results.md -text -whitespace
+reports/runs/colab-t4-2026-08-25/evaluation_hardware.txt -text -whitespace
+reports/runs/colab-t4-2026-08-25/evaluation_environment.txt -text -whitespace
